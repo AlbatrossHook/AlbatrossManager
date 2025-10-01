@@ -1,0 +1,417 @@
+<resources>
+    <!-- App Name -->
+    <string name="app_name">Albatross</string>
+    
+    <!-- Main Tabs -->
+    <string name="tab_server">Server</string>
+    <string name="tab_plugins">Plugins</string>
+    <string name="tab_manager">Plugin Manage</string>
+    <string name="tab_settings">Settings</string>
+    
+    <!-- Common UI -->
+    <string name="loading">Loading...</string>
+    <string name="checking">Checking...</string>
+    <string name="unknown">Unknown</string>
+    <string name="none">None</string>
+    <string name="none_found">Not Found</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
+    <string name="ok">OK</string>
+    <string name="close">Close</string>
+    <string name="delete">Delete</string>
+    <string name="add">Add</string>
+    <string name="search">Search</string>
+    <string name="clear">Clear</string>
+    <string name="refresh">Refresh</string>
+    <string name="retry">Retry</string>
+    <string name="success">Success</string>
+    <string name="failed">Failed</string>
+    <string name="error">Error</string>
+    <string name="warning">Warning</string>
+    <string name="info">Info</string>
+    
+    <!-- Server Status -->
+    <string name="server_status">Server Status</string>
+    <string name="server_running">Server is running</string>
+    <string name="server_not_running">Server is not running</string>
+    <string name="start_server">Start Server</string>
+    <string name="stop_server">Stop Server</string>
+    <string name="server_start_success">Server started successfully</string>
+    <string name="server_start_failed">Server start failed</string>
+    <string name="server_stopped">Server stopped</string>
+    <string name="server_stop_error">Error occurred while stopping server</string>
+    <string name="server_start_error">Error occurred while starting server</string>
+    <string name="server_not_found">Please import and select server components first</string>
+    <string name="server_no_root">Root permission required to start server</string>
+    <string name="server_processing">Processing server components...</string>
+    
+    <!-- Core Module -->
+    <string name="core_module">Core Module</string>
+    <string name="core_available">Core available</string>
+    <string name="core_not_available">No core available</string>
+    <string name="core_not_supported">Not supported</string>
+    <string name="core_support_check">Support check:</string>
+    <string name="core_features">Supported features:</string>
+    <string name="core_current_version">Current version:</string>
+    <string name="core_management">Core Module Management</string>
+    <string name="core_import">Import Core (ZIP)</string>
+    <string name="core_installed_version">Installed Version</string>
+    <string name="core_no_modules">No core modules, please import ZIP package</string>
+    <string name="core_import_success">Core component %s imported successfully</string>
+    <string name="core_import_success_default">Core component %s imported successfully, set as default, restart required</string>
+    <string name="core_version_exists">Version exists</string>
+    <string name="core_version_exists_message">Version %s already exists, overwrite?</string>
+    <string name="core_overwrite">Overwrite</string>
+    <string name="core_switch_version">Switch Version</string>
+    <string name="core_switch_confirm">Switch to version %s? This will close existing services and require app restart.</string>
+    <string name="core_switch_success">Version switched</string>
+    <string name="core_switch_restart">Please restart app for version switch to take effect</string>
+    <string name="core_restart_now">Restart Now</string>
+    <string name="core_restart_later">Restart Later</string>
+    <string name="core_delete_version">Delete Version</string>
+    <string name="core_delete_confirm">Delete version %s? This action cannot be undone.</string>
+    <string name="core_cannot_delete_current">Cannot delete currently used version</string>
+    <string name="core_version_description">Version %s Description</string>
+    <string name="core_copy_description">Copy Description</string>
+    <string name="core_description_copied">Description copied</string>
+    
+    <!-- Device Info -->
+    <string name="device_info">Device Info</string>
+    <string name="cpu_architecture">CPU Architecture:</string>
+    <string name="root_status">Root Status:</string>
+    <string name="root_obtained">Root permission obtained</string>
+    <string name="root_not_obtained">Root permission not obtained</string>
+    <string name="android_version">Android Version:</string>
+    <string name="phone_model">Phone Model:</string>
+    
+    <!-- App List -->
+    <string name="no_apps_available">No third-party plugins found</string>
+    <string name="no_apps_found">No apps found containing \"%s\"</string>
+    <string name="search_hint">Search app name or package name</string>
+    <string name="plugin_manager">Plugin Manager</string>
+    <string name="no_plugins_found">No plugins found</string>
+    <string name="add_selected_plugins">Add Selected Plugins</string>
+    <string name="no_plugins_available">No plugins available, please click add plugin button to select plugin apps</string>
+    <string name="plugin_add_success">Plugin added successfully</string>
+    <string name="plugin_info_failed">Failed to get plugin info: %s</string>
+    <string name="plugin_config_updated">Plugin configuration updated</string>
+    <string name="plugin_cannot_start">Cannot start plugin app</string>
+    <string name="plugin_inject_success">Injection successful</string>
+    <string name="plugin_inject_failed">Failed to get plugin info</string>
+    <string name="plugin_inject_confirm">Injection Confirmation</string>
+    <string name="plugin_inject_warning">Injection may cause app crash or be detected as risk, confirm injection? App restart required.</string>
+    <string name="plugin_inject_immediate">Immediate Injection Confirmation</string>
+    <string name="plugin_inject_immediate_warning">Injection may cause app crash or be detected as risk, confirm injection?</string>
+    
+    <!-- App Detail -->
+    <string name="app_info">App Info</string>
+    <string name="app_components">Components</string>
+    <string name="app_storage">Local Storage</string>
+    <string name="app_log">App Log</string>
+    <string name="app_config">Config</string>
+    <string name="app_target">Apps</string>
+    <string name="app_log_tab">Log</string>
+    <string name="invalid_app_info">Invalid app info</string>
+    <string name="cannot_get_app_info">Cannot get app info</string>
+    <string name="open_app">Open</string>
+    <string name="close_app">Close</string>
+    <string name="freeze_app">Freeze</string>
+    <string name="inject_now">Inject Now</string>
+    <string name="unpack">Unpack</string>
+    <string name="app_opened">App opened</string>
+    <string name="app_cannot_open">Cannot open app</string>
+    <string name="app_closed">App closed</string>
+    <string name="app_close_failed">Failed to close app</string>
+    <string name="app_frozen">App frozen</string>
+    <string name="app_freeze_failed">Failed to freeze app</string>
+    <string name="app_injecting">Injecting app...</string>
+    <string name="app_unpacking">Starting unpack process...</string>
+    
+    <!-- App Info Details -->
+    <string name="package_name">Package Name</string>
+    <string name="version_info">Version Info</string>
+    <string name="version_name">Version Name</string>
+    <string name="version_code">Version Code</string>
+    <string name="app_path">App Path</string>
+    <string name="data_path">Data Path</string>
+    <string name="install_time">Install Time</string>
+    <string name="last_update_time">Last Update Time</string>
+    <string name="app_type">App Type</string>
+    <string name="system_app">System App</string>
+    <string name="user_app">User App</string>
+    <string name="signature_hash">Signature Hash</string>
+    <string name="running_processes">Running Processes</string>
+    <string name="no_signature">No signature info</string>
+    <string name="signature_error">Failed to get signature: %s</string>
+    <string name="app_not_running">App not running</string>
+    <string name="process_info_error">Failed to get process info: %s</string>
+    
+    <!-- App Components -->
+    <string name="meta_data_properties">Meta-Data Properties:</string>
+    <string name="no_meta_data">No Meta-Data info</string>
+    <string name="activities">Activities</string>
+    <string name="services">Services</string>
+    <string name="receivers">Receivers</string>
+    <string name="providers">Content Providers</string>
+    
+    <!-- App Storage -->
+    <string name="read_storage_directory">Read Storage Directory</string>
+    <string name="storage_not_found">Storage directory not found or no permission to access</string>
+    <string name="file_name">File Name</string>
+    <string name="file_details">File Details</string>
+    <string name="directory_format">Directory | %d items</string>
+    <string name="file_format">%s | Modified %s</string>
+    
+    <!-- App Log -->
+    <string name="log_monitoring">Log Monitoring:</string>
+    <string name="clear_log">Clear Log</string>
+    <string name="log_output_placeholder">Log output will be displayed here...</string>
+    <string name="log_started">Started log monitoring...</string>
+    <string name="log_failed">Log monitoring failed: %s</string>
+    <string name="log_stopped">Stopped log monitoring</string>
+    
+    <!-- Plugin Config -->
+    <string name="plugin_info">Plugin Info</string>
+    <string name="config_params">Config Parameters</string>
+    <string name="param1_string">Parameter 1 (String)</string>
+    <string name="param2_number">Parameter 2 (Number)</string>
+    <string name="save_config">Save Config</string>
+    <string name="config_in_plugin">Configure in Plugin</string>
+    <string name="author_label">Author: %s</string>
+    <string name="description_label">Description: %s</string>
+    <string name="enter_param1">Please enter parameter 1</string>
+    <string name="param2_must_be_number">Parameter 2 must be a number</string>
+    <string name="config_saved">Configuration saved</string>
+    
+    <!-- Plugin Target Apps -->
+    <string name="no_apps_found_for_target">No apps found</string>
+    
+    <!-- Settings -->
+    <string name="root_path_config">Root Path Configuration</string>
+    <string name="server_run_path">Server Run Path:</string>
+    <string name="server_run_path_hint">Server components will run under this path</string>
+    <string name="save_path">Save Path</string>
+    <string name="enter_root_path">Please enter root path</string>
+    <string name="root_path_saved">Root path saved successfully</string>
+    <string name="need_root_for_server">Root permission required to configure server components</string>
+    
+    <!-- Server Version -->
+    <string name="version_default">v1.0.0</string>
+    <string name="switch_version">Switch</string>
+    <string name="delete_version">Delete</string>
+    <string name="architecture_support">Architecture: %s (32-bit supported)</string>
+    <string name="version_description">Version Description:</string>
+    <string name="version_description_default">Fixed known bugs, improved stability and performance...</string>
+    <string name="view_all">View All</string>
+    
+    <!-- App Item -->
+    <string name="plugin_tag">Plugin</string>
+    <string name="added_tag">Added</string>
+    <string name="sys_tag">sys</string>
+    <string name="inject_tag">inject</string>
+    
+    <!-- Plugin Item -->
+    <string name="plugin_name_default">name</string>
+    <string name="plugin_description_default">desc</string>
+    
+    <!-- Error Messages -->
+    <string name="no_plugins_found_error">No plugins found</string>
+    <string name="service_not_connected">Service not connected</string>
+    <string name="process_not_found">Process not found</string>
+    <string name="injection_failed">Injection failed</string>
+    <string name="injection_failed_with_error">Injection failed: %s</string>
+    <string name="processing_failed">Processing failed: %s</string>
+    <string name="zip_extract_failed">ZIP file extraction failed</string>
+    <string name="zip_incomplete">ZIP package incomplete, missing version file</string>
+    <string name="version_read_failed">Cannot read version info</string>
+    <string name="no_description">No description info</string>
+    <string name="file_not_found">Source file does not exist or is not a file: %s</string>
+    <string name="copy_failed">File copy failed: %s</string>
+    <string name="set_permission_failed">Set failed: %s</string>
+    <string name="file_not_exists">File does not exist or is not a file: %s</string>
+    <string name="read_file_failed">Read file failed: %s</string>
+    <string name="cannot_delete_file">Cannot delete file: %s</string>
+    <string name="zip_open_failed">Cannot open ZIP file input stream</string>
+    <string name="cannot_create_dir">Cannot create directory: %s</string>
+    <string name="zip_extract_error">ZIP extraction failed: %s</string>
+    <string name="kernel_version_failed">Failed to get kernel version: %s</string>
+    <string name="unknown_kernel">Unknown</string>
+    <string name="no_arch_files">No files found for %s architecture</string>
+    <string name="save_failed">Save failed: %s</string>
+    <string name="server_version_unknown">Unknown version</string>
+    <string name="no_root_permission">No root permission, cannot force stop app</string>
+    <string name="no_root_freeze">No root permission, cannot freeze app</string>
+    <string name="no_root_unfreeze">No root permission, cannot unfreeze app</string>
+    <string name="check_su_failed">Check su command failed: %s</string>
+    <string name="server_already_running">Server is already running</string>
+    <string name="server_no_root_permission">No root permission, cannot start server</string>
+    <string name="server_no_current_version">No current server version info found</string>
+    <string name="server_start_success_version">Server started successfully, version: %s</string>
+    <string name="server_start_verify_failed">Server start failed, cannot verify running status</string>
+    <string name="server_start_exception">Server start exception: %s</string>
+    <string name="server_stop_no_root">No root permission, cannot start server</string>
+    <string name="server_stop_no_version">No current server version info found</string>
+    <string name="server_stop_exception">Server start exception: %s</string>
+    <string name="server_not_running_check">Server is not running</string>
+    <string name="server_stop_command_failed">Stop server command failed, return code: %d</string>
+    <string name="server_stop_exception_error">Stop server exception: %s</string>
+    <string name="read_server_output_failed">Read server output failed: %s</string>
+    <string name="read_server_error_failed">Read server error output failed: %s</string>
+    <string name="server_output">Server output: %s</string>
+    <string name="server_error">Server error: %s</string>
+    <string name="target_activity_cancelled">Target Activity was cancelled or not started successfully</string>
+    
+    <!-- Additional strings for activities -->
+    <string name="plugin_need_dynamic_config">Need to start plugin app to get dynamic configuration</string>
+    <string name="tab_server_status">Status</string>
+
+    <string name="app_list_title">Apps</string>
+    <string name="app_count_format">%d apps</string>
+    
+    <!-- Missing strings found in hardcoded text -->
+    <string name="checking_ellipsis">Checking...</string>
+    <string name="core_management_title">Core Module Management</string>
+    <string name="core_import_zip">Import Core (ZIP)</string>
+    <string name="core_installed_version_title">Installed Version</string>
+    <string name="core_no_modules_message">No core modules, please import ZIP package</string>
+    <string name="root_path_config_title">Root Path Configuration</string>
+    <string name="server_run_path_title">Server Run Path</string>
+    <string name="server_run_path_hint_text">Server components will run under this path</string>
+    <string name="save_path_title">Save Path</string>
+    <string name="server_address">Server Address</string>
+    <string name="server_listen_address">Server Listen Address</string>
+    <string name="server_listen_address_hint">Please enter server listen address</string>
+    <string name="su_file_path">SU File Path</string>
+    <string name="su_file_path_hint">If app cannot find su file, need to manually configure su path</string>
+    <string name="su_file_path_input_hint">Please enter su file path</string>
+    <string name="copy_button">Copy</string>
+    <string name="show_system_apps">Show System Apps</string>
+    <string name="filter_plugins">Filter Plugins</string>
+    <string name="select_all">Select All</string>
+    <string name="deselect_all">Deselect All</string>
+    <string name="select_target_apps">Select Target Apps</string>
+    <string name="menu_button">Menu</string>
+    <string name="path_info">Path Info</string>
+    <string name="time_info">Time Info</string>
+    <string name="system_info">System Info</string>
+    <string name="add_first_plugin">Add First Plugin</string>
+    <string name="plugin_name_default_text">Plugin Name</string>
+    <string name="delete_button">Delete</string>
+    <string name="system_tag">System</string>
+    <string name="version_default_text">v1.0.0</string>
+    <string name="current_using_tag">Using</string>
+    <string name="switch_button">Switch</string>
+    <string name="delete_button_text">Delete</string>
+    <string name="architecture_support_format">Architecture: arm64-v8a (32-bit supported)</string>
+    <string name="version_description_label">Version Description:</string>
+    <string name="version_description_default_text">Fixed known bugs, improved stability and performance...</string>
+    <string name="view_all_button">View All</string>
+    <string name="read_storage_directory_title">Read Storage Directory</string>
+    <string name="meta_data_properties_title">Meta-Data Properties:</string>
+    <string name="loading_ellipsis">Loading...</string>
+    <string name="file_icon">📁</string>
+    <string name="file_name_title">File Name</string>
+    <string name="file_details_title">File Details</string>
+    <string name="sys_tag_text">sys</string>
+    <string name="inject_tag_text">inject</string>
+    <string name="plugin_tag_text">Plugin</string>
+    <string name="clear_log_button">Clear Log</string>
+    <string name="add_plugin_menu">Add Plugin</string>
+    <string name="show_system_apps_menu">Show System Apps</string>
+    <string name="select_all_menu">Select All</string>
+    <string name="deselect_all_menu">Deselect All</string>
+    <string name="force_add_as_plugin">Force Add as Plugin</string>
+    <string name="cancel_menu">Cancel</string>
+    <string name="albatross_manager_title">Albatross Manager</string>
+    <string name="app_count_format_default">0 apps</string>
+    
+    <!-- Toast messages and dialogs -->
+    <string name="enter_correct_su_path">Please enter correct su path</string>
+    <string name="enter_correct_server_path">Please enter correct server path</string>
+    <string name="enter_root_path_message">Please enter root path</string>
+    <string name="root_path_saved_success">Root path saved successfully</string>
+    <string name="processing_server_components">Processing server components...</string>
+    <string name="zip_extract_failed_message">ZIP file extraction failed</string>
+    <string name="zip_incomplete_message">ZIP package incomplete, missing version file</string>
+    <string name="version_read_failed_message">Cannot read version info</string>
+    <string name="no_description_info">No description info</string>
+    <string name="version_exists_title">Version exists</string>
+    <string name="version_exists_message_format">Version %s already exists, overwrite?</string>
+    <string name="overwrite_button">Overwrite</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="processing_failed_format">Processing failed: %s</string>
+    <string name="no_arch_files_format">No files found for %s architecture</string>
+    <string name="core_import_success_format">Core component %s imported successfully</string>
+    <string name="core_import_success_default_format">Core component %s imported successfully, set as default, restart required</string>
+    <string name="save_failed_format">Save failed: %s</string>
+    <string name="switch_version_title">Switch Version</string>
+    <string name="switch_version_confirm_format">Switch to version %s? This will close existing services and require app restart.</string>
+    <string name="confirm_button">Confirm</string>
+    <string name="version_description_title_format">Version %s Description</string>
+    <string name="close_button">Close</string>
+    <string name="copy_description_button">Copy Description</string>
+    <string name="description_copied">Description copied</string>
+    <string name="cannot_delete_current_version">Cannot delete currently used version</string>
+    <string name="delete_version_title">Delete Version</string>
+    <string name="delete_version_confirm_format">Delete version %s? This action cannot be undone.</string>
+    <string name="delete_confirm_button">Delete</string>
+    <string name="version_switched_title">Version switched</string>
+    <string name="restart_app_for_version_switch">Please restart app for version switch to take effect</string>
+    <string name="restart_now_button">Restart Now</string>
+    <string name="restart_later_button">Restart Later</string>
+    <string name="server_already_running_message">Server is already running</string>
+    <string name="no_root_permission_start_server">No root permission, cannot start server</string>
+    <string name="no_current_server_version">No current server version info found</string>
+    <string name="server_start_success_version_format">Server started successfully, version: %s</string>
+    <string name="server_start_verify_failed_message">Server start failed, cannot verify running status</string>
+    <string name="server_start_exception_format">Server start exception: %s</string>
+    <string name="server_stop_no_root_permission">No root permission, cannot start server</string>
+    <string name="server_stop_exception_format">Server start exception: %s</string>
+    <string name="server_not_running_check_message">Server is not running</string>
+    <string name="server_stop_command_failed_format">Stop server command failed, return code: %d</string>
+    <string name="server_stop_exception_error_format">Stop server exception: %s</string>
+    <string name="read_server_output_failed_format">Read server output failed: %s</string>
+    <string name="read_server_error_failed_format">Read server error output failed: %s</string>
+    <string name="server_output_format">Server output: %s</string>
+    <string name="server_error_format">Server error: %s</string>
+    <string name="target_activity_cancelled_message">Target Activity was cancelled or not started successfully</string>
+    <string name="plugin_need_dynamic_config_message">Need to start plugin app to get dynamic configuration</string>
+    <string name="tab_server_status_title">Status</string>
+    <string name="injection_successful">Injection successful</string>
+    <string name="get_plugin_info_failed">Failed to get plugin info</string>
+    <string name="plugin_enabled_status">Plugin enabled</string>
+    <string name="plugin_disabled_status">Plugin disabled</string>
+    <string name="param1_empty_cannot_copy">Parameter 1 is empty, cannot copy</string>
+    <string name="param1_copied_to_clipboard">Parameter 1 copied to clipboard</string>
+    <string name="enter_param1_message">Please enter parameter 1</string>
+    <string name="param2_must_be_number_message">Parameter 2 must be a number</string>
+    <string name="config_saved_message">Configuration saved</string>
+    <string name="load_app_list_failed_format">Failed to load app list: %s</string>
+    <string name="storage_not_found_message">Storage directory not found or no permission to access</string>
+    <string name="injection_warning_message">Injection may cause app crash or be detected as risk, confirm injection? App restart required.</string>
+    <string name="injection_immediate_warning_message">Injection may cause app crash or be detected as risk, confirm injection?</string>
+    <string name="enter_string_param_hint">Please enter string parameter</string>
+    <string name="enter_number_param_hint">Please enter number parameter</string>
+    <string name="search_app_name_or_package_hint">Search app name or package name</string>
+    <string name="search_plugin_name_or_package_hint">Search plugin name or package name</string>
+    <string name="selinux_status_title">Selinux Status:</string>
+    <string name="check_core_availability_button">Load Core</string>
+    <string name="finish_core_availability_message">Core compatibility checked</string>
+    <string name="unfreeze_app_button">Unfreeze</string>
+    <string name="app_unfrozen_status">App unfrozen</string>
+    <string name="app_unfreeze_failed_message">Failed to unfreeze app</string>
+    <string name="plugin_enabled_title">Enable Plugin</string>
+    <string name="plugin_app_uninstalled_message">Plugin app uninstalled, cannot use normally</string>
+    
+    <!-- App Actions Menu -->
+    <string name="more_actions">More</string>
+    <string name="inject_action">Inject</string>
+    <string name="unload_action">Unload</string>
+    <string name="disable_action">Stop</string>
+    <string name="open_action">Open</string>
+    <string name="unload_feature_pending">Unload feature pending</string>
+    <string name="disable_feature_pending">Disable feature pending</string>
+    <string name="cannot_open_app">Cannot open app</string>
+    <string name="open_app_failed">Open app failed: %s</string>
+</resources>

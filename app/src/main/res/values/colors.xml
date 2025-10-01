@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Material Design 3 Color System -->
+    
+    <!-- Primary Colors -->
+    <color name="primary">#6750A4</color>
+    <color name="on_primary">#FFFFFF</color>
+    <color name="primary_container">#EADDFF</color>
+    <color name="on_primary_container">#21005D</color>
+    
+    <!-- Secondary Colors -->
+    <color name="secondary">#625B71</color>
+    <color name="on_secondary">#FFFFFF</color>
+    <color name="secondary_container">#E8DEF8</color>
+    <color name="on_secondary_container">#1D192B</color>
+    
+    <!-- Tertiary Colors -->
+    <color name="tertiary">#7D5260</color>
+    <color name="on_tertiary">#FFFFFF</color>
+    <color name="tertiary_container">#FFD8E4</color>
+    <color name="on_tertiary_container">#31111D</color>
+    
+    <!-- Accent Color (alias for tertiary) -->
+    <color name="accent">#7D5260</color>
+    
+    <!-- Error Colors -->
+    <color name="error">#BA1A1A</color>
+    <color name="on_error">#FFFFFF</color>
+    <color name="error_container">#FFDAD6</color>
+    <color name="on_error_container">#410002</color>
+    
+    <!-- Background Colors -->
+    <color name="background">#FFFBFE</color>
+    <color name="on_background">#1C1B1F</color>
+    <color name="surface">#FFFBFE</color>
+    <color name="on_surface">#1C1B1F</color>
+    <color name="surface_variant">#E7E0EC</color>
+    <color name="on_surface_variant">#49454F</color>
+    
+    <!-- Outline Colors -->
+    <color name="outline">#79747E</color>
+    <color name="outline_variant">#CAC4D0</color>
+    
+    <!-- Surface Tint -->
+    <color name="surface_tint">#6750A4</color>
+    
+    <!-- Legacy Colors for Compatibility -->
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    
+    <!-- Status Colors -->
+    <color name="success">#4CAF50</color>
+    <color name="success_container">#E8F5E9</color>
+    <color name="warning">#FF9800</color>
+    <color name="warning_container">#FFF3E0</color>
+    <color name="info">#2196F3</color>
+    <color name="info_container">#E3F2FD</color>
+    
+    <!-- Text Colors -->
+    <color name="text_primary">#1C1B1F</color>
+    <color name="text_secondary">#49454F</color>
+    <color name="text_disabled">#79747E</color>
+    <color name="text_hint">#CAC4D0</color>
+    
+    <!-- Card and Component Colors -->
+    <color name="card_background">#FFFFFF</color>
+    <color name="card_elevated">#FFFFFF</color>
+    <color name="divider">#E7E0EC</color>
+    <color name="divider_focus">#6750A4</color>
+    
+    <!-- Interactive Colors -->
+    <color name="ripple">#1F6750A4</color>
+    <color name="hover">#0F6750A4</color>
+    <color name="focus">#1F6750A4</color>
+    <color name="pressed">#2F6750A4</color>
+    
+    <!-- Tab Colors -->
+    <color name="tab_selected">#6750A4</color>
+    <color name="tab_unselected">#49454F</color>
+    <color name="tab_indicator">#6750A4</color>
+    
+    <!-- Legacy Compatibility -->
+    <color name="colorPrimary">#6750A4</color>
+    <color name="primary_color">#6750A4</color>
+    <color name="primary_dark">#4F378B</color>
+    <color name="primary_light">#EADDFF</color>
+    <color name="background_light">#FFFBFE</color>
+    <color name="surface_color">#FFFFFF</color>
+    <color name="divider_color">#E7E0EC</color>
+    <color name="red_light">#FFEBEE</color>
+    <color name="red_dark">#BA1A1A</color>
+    <color name="green">#4CAF50</color>
+    <color name="red">#BA1A1A</color>
+    <color name="gray">#79747E</color>
+    <color name="blue">#2196F3</color>
+    <color name="green_light">#E8F5E9</color>
+    <color name="gray_light">#F5F5F5</color>
+    <color name="purple">#6750A4</color>
+    <color name="orange">#FF9800</color>
+    
+    <!-- Button Text Colors for Light Theme -->
+    <color name="button_text_primary">#FFFFFF</color>
+    <color name="button_text_secondary">#6750A4</color>
+    <color name="button_text_on_success">#FFFFFF</color>
+    <color name="button_text_on_warning">#FFFFFF</color>
+    <color name="button_text_on_error">#FFFFFF</color>
+    <color name="button_text_on_accent">#FFFFFF</color>
+</resources>

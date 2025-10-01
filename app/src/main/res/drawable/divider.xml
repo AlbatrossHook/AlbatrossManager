@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <!-- 分割线高度 -->
+    <size android:height="1dp" />
+    <!-- 分割线颜色（浅灰色，适配大多数场景） -->
+    <solid android:color="@android:color/darker_gray" />
+    <!-- 可选：添加透明度 -->
+    <alpha android:value="0.3" />
+</shape>

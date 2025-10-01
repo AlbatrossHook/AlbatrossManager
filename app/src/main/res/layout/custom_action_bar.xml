@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:padding="16dp"
+    android:paddingTop="4dp"
+    android:background="@color/surface"
+    android:elevation="4dp"
+    android:minHeight="56dp"
+    android:fitsSystemWindows="true">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/tv_action_bar_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        style="@style/TextTitle"
+        android:textColor="@color/text_primary"
+        android:text="@string/albatross_manager_title" />
+
+    <!-- App count (for app list) -->
+    <TextView
+        android:id="@+id/tv_app_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_count_format_default"
+        style="@style/TextCaption"
+        android:textColor="@color/text_secondary"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/plugin_tag_bg"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:visibility="gone" />
+
+    <!-- Action buttons container -->
+    <LinearLayout
+        android:id="@+id/layout_action_buttons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <!-- Refresh button (for server status) -->
+        <ImageButton
+            android:id="@+id/btn_refresh"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_refresh"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="刷新"
+            android:visibility="gone"
+            android:padding="12dp"
+            android:rotation="45"
+            app:tint="@color/text_primary" />
+
+        <!-- Add button (for plugin manager) -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_add_plugin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add"
+            android:contentDescription="添加插件"
+            app:backgroundTint="@color/primary"
+            app:tint="@color/on_primary"
+            app:fabSize="mini"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+</LinearLayout>

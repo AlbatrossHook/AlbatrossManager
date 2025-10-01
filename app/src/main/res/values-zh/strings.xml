@@ -1,0 +1,412 @@
+<resources>
+    <!-- App Name -->
+    <string name="app_name">Albatross</string>
+    
+    <!-- Main Tabs -->
+    <string name="tab_server">服务</string>
+    <string name="tab_plugins">插件</string>
+    <string name="tab_settings">设置</string>
+    <string name="tab_manager">插件管理</string>
+    
+    <!-- Common UI -->
+    <string name="loading">加载中...</string>
+    <string name="checking">检查中...</string>
+    <string name="unknown">未知</string>
+    <string name="none">无</string>
+    <string name="none_found">没有找到</string>
+    <string name="save">保存</string>
+    <string name="cancel">取消</string>
+    <string name="confirm">确认</string>
+    <string name="ok">确定</string>
+    <string name="close">关闭</string>
+    <string name="delete">删除</string>
+    <string name="add">添加</string>
+    <string name="search">搜索</string>
+    <string name="clear">清空</string>
+    <string name="refresh">刷新</string>
+    <string name="retry">重试</string>
+    <string name="success">成功</string>
+    <string name="failed">失败</string>
+    <string name="error">错误</string>
+    <string name="warning">警告</string>
+    <string name="info">信息</string>
+    
+    <!-- Server Status -->
+    <string name="server_status">Server状态</string>
+    <string name="server_running">Server 正在运行</string>
+    <string name="server_not_running">Server 未运行</string>
+    <string name="start_server">启动 Server</string>
+    <string name="stop_server">停止 Server</string>
+    <string name="server_start_success">服务启动成功</string>
+    <string name="server_start_failed">服务启动失败</string>
+    <string name="server_stopped">服务已停止</string>
+    <string name="server_stop_error">停止服务时发生错误</string>
+    <string name="server_start_error">启动服务时发生错误</string>
+    <string name="server_not_found">请先导入并选择服务组件</string>
+    <string name="server_no_root">需要Root权限才能启动服务</string>
+    <string name="server_processing">正在处理服务组件...</string>
+    
+    <!-- Core Module -->
+    <string name="core_module">核心模块</string>
+    <string name="core_available">核心可用</string>
+    <string name="core_not_available">没有可用的核心</string>
+    <string name="core_not_supported">不支持</string>
+    <string name="core_support_check">是否支持:</string>
+    <string name="core_features">支持特性:</string>
+    <string name="core_current_version">当前版本:</string>
+    <string name="core_management">核心模块管理</string>
+    <string name="core_import">导入核心(ZIP)</string>
+    <string name="core_installed_version">已安装版本</string>
+    <string name="core_no_modules">暂无核心模块，请导入ZIP包</string>
+    <string name="core_import_success">核心组件 %s 导入成功</string>
+    <string name="core_import_success_default">核心组件 %s 导入成功，设为默认,重启生效</string>
+    <string name="core_version_exists">版本已存在</string>
+    <string name="core_version_exists_message">版本 %s 已存在，是否覆盖?</string>
+    <string name="core_overwrite">覆盖</string>
+    <string name="core_switch_version">切换版本</string>
+    <string name="core_switch_confirm">确定要切换到版本 %s 吗？切换后将关闭原有服务,需要重启应用生效。</string>
+    <string name="core_switch_success">版本已切换</string>
+    <string name="core_switch_restart">请重启应用使版本切换生效</string>
+    <string name="core_restart_now">立即重启</string>
+    <string name="core_restart_later">稍后重启</string>
+    <string name="core_delete_version">删除版本</string>
+    <string name="core_delete_confirm">确定要删除版本 %s 吗？此操作不可恢复。</string>
+    <string name="core_cannot_delete_current">不能删除当前正在使用的版本</string>
+    <string name="core_version_description">版本 %s 描述</string>
+    <string name="core_copy_description">复制描述</string>
+    <string name="core_description_copied">描述已复制</string>
+    
+    <!-- Device Info -->
+    <string name="device_info">设备信息</string>
+    <string name="cpu_architecture">CPU架构:</string>
+    <string name="root_status">Root状态:</string>
+    <string name="root_obtained">已获取Root权限</string>
+    <string name="root_not_obtained">未获取Root权限</string>
+    <string name="android_version">Android版本:</string>
+    <string name="phone_model">手机型号:</string>
+    
+    <!-- App List -->
+    <string name="no_apps_available">没有找到第三方插件</string>
+    <string name="no_apps_found">没有找到包含「%s」的应用</string>
+    <string name="search_hint">搜索应用名称或包名</string>
+    <string name="plugin_manager">插件管理</string>
+    <string name="no_plugins_found">没有找到插件</string>
+    <string name="add_selected_plugins">添加选中的插件</string>
+    <string name="no_plugins_available">暂无插件，请点击添加插件按钮选择插件应用</string>
+    <string name="plugin_add_success">插件添加成功</string>
+    <string name="plugin_info_failed">获取插件信息失败: %s</string>
+    <string name="plugin_config_updated">已更新插件配置</string>
+    <string name="plugin_cannot_start">无法启动插件应用</string>
+    <string name="plugin_inject_success">注入成功</string>
+    <string name="plugin_inject_failed">获取插件信息失败</string>
+    <string name="plugin_inject_confirm">注入确认</string>
+    <string name="plugin_inject_warning">注入可能导致app崩溃，或者被app检测到风险，确定是否注入?需要重启app生效.</string>
+    <string name="plugin_inject_immediate">立即注入确认</string>
+    <string name="plugin_inject_immediate_warning">注入可能导致app崩溃，或者被app检测到风险，确定是否注入?</string>
+    
+    <!-- App Detail -->
+    <string name="app_info">应用信息</string>
+    <string name="app_components">组件信息</string>
+    <string name="app_storage">本地存储</string>
+    <string name="app_log">应用日志</string>
+    <string name="app_config">配置</string>
+    <string name="app_target">应用</string>
+    <string name="app_log_tab">日志</string>
+    <string name="invalid_app_info">无效的应用信息</string>
+    <string name="cannot_get_app_info">无法获取应用信息</string>
+    <string name="open_app">打开</string>
+    <string name="close_app">关闭</string>
+    <string name="freeze_app">冻结</string>
+    <string name="inject_now">立即注入</string>
+    <string name="unpack">脱壳</string>
+    <string name="app_opened">应用已打开</string>
+    <string name="app_cannot_open">无法打开应用</string>
+    <string name="app_closed">应用已关闭</string>
+    <string name="app_close_failed">关闭应用失败</string>
+    <string name="app_frozen">应用已冻结</string>
+    <string name="app_freeze_failed">冻结应用失败</string>
+    <string name="app_injecting">正在注入应用...</string>
+    <string name="app_unpacking">开始脱壳处理...</string>
+    
+    <!-- App Info Details -->
+    <string name="package_name">包名</string>
+    <string name="version_info">版本信息</string>
+    <string name="version_name">版本名称</string>
+    <string name="version_code">版本号</string>
+    <string name="app_path">应用路径</string>
+    <string name="data_path">数据路径</string>
+    <string name="install_time">安装时间</string>
+    <string name="last_update_time">最后更新时间</string>
+    <string name="app_type">应用类型</string>
+    <string name="system_app">系统应用</string>
+    <string name="user_app">用户应用</string>
+    <string name="signature_hash">签名哈希</string>
+    <string name="running_processes">运行进程</string>
+    <string name="no_signature">无签名信息</string>
+    <string name="signature_error">获取签名失败: %s</string>
+    <string name="app_not_running">应用未运行</string>
+    <string name="process_info_error">获取进程信息失败: %s</string>
+    
+    <!-- App Components -->
+    <string name="meta_data_properties">Meta-Data属性:</string>
+    <string name="no_meta_data">无Meta-Data信息</string>
+    <string name="activities">活动(Activity)</string>
+    <string name="services">服务(Service)</string>
+    <string name="receivers">接收器(Receiver)</string>
+    <string name="providers">内容提供者(Provider)</string>
+    
+    <!-- App Storage -->
+    <string name="read_storage_directory">读取存储目录</string>
+    <string name="storage_not_found">未找到存储目录或无权限访问</string>
+    <string name="file_name">文件名</string>
+    <string name="file_details">文件详情</string>
+    <string name="directory_format">目录 | %d 个项目</string>
+    <string name="file_format">%s | 修改于 %s</string>
+    
+    <!-- App Log -->
+    <string name="log_monitoring">监听日志:</string>
+    <string name="clear_log">清空日志</string>
+    <string name="log_output_placeholder">日志输出将显示在这里...</string>
+    <string name="log_started">开始监听日志...</string>
+    <string name="log_failed">日志监听失败: %s</string>
+    <string name="log_stopped">已停止日志监听</string>
+    
+    <!-- Plugin Config -->
+    <string name="plugin_info">插件信息</string>
+    <string name="config_params">配置参数</string>
+    <string name="param1_string">参数1 (字符串)</string>
+    <string name="param2_number">参数2 (数值)</string>
+    <string name="save_config">保存配置</string>
+    <string name="config_in_plugin">在插件中配置</string>
+    <string name="author_label">作者: %s</string>
+    <string name="description_label">描述: %s</string>
+    <string name="enter_param1">请输入参数1</string>
+    <string name="param2_must_be_number">参数2必须是数字</string>
+    <string name="config_saved">配置已保存</string>
+    
+    <!-- Plugin Target Apps -->
+    <string name="no_apps_found_for_target">没有找到应用</string>
+    
+    <!-- Settings -->
+    <string name="root_path_config">Root路径配置</string>
+    <string name="server_run_path">服务运行路径:</string>
+    <string name="server_run_path_hint">服务组件将在此路径下运行</string>
+    <string name="save_path">保存路径</string>
+    <string name="enter_root_path">请输入Root路径</string>
+    <string name="root_path_saved">Root路径保存成功</string>
+    <string name="need_root_for_server">需要Root权限才能配置服务组件</string>
+    
+    <!-- Server Version -->
+    <string name="version_default">v1.0.0</string>
+    <string name="switch_version">切换</string>
+    <string name="delete_version">删除</string>
+    <string name="architecture_support">架构: %s (支持32位)</string>
+    <string name="version_description">版本描述:</string>
+    <string name="version_description_default">修复了已知bug，提升了稳定性和性能...</string>
+    <string name="view_all">查看全部</string>
+    
+    <!-- App Item -->
+    <string name="plugin_tag">插件</string>
+    <string name="added_tag">已添加</string>
+    <string name="sys_tag">sys</string>
+    <string name="inject_tag">inject</string>
+    
+    <!-- Plugin Item -->
+    <string name="plugin_name_default">name</string>
+    <string name="plugin_description_default">desc</string>
+    
+    <!-- Error Messages -->
+    <string name="no_plugins_found_error">没有找到任何插件</string>
+    <string name="service_not_connected">服务没有连接</string>
+    <string name="process_not_found">找不到对应的进程</string>
+    <string name="injection_failed">注入失败</string>
+    <string name="injection_failed_with_error">注入失败:%s</string>
+    <string name="processing_failed">处理失败: %s</string>
+    <string name="zip_extract_failed">ZIP文件解压失败</string>
+    <string name="zip_incomplete">ZIP包不完整，缺少version文件</string>
+    <string name="version_read_failed">无法读取版本信息</string>
+    <string name="no_description">无描述信息</string>
+    <string name="file_not_found">源文件不存在或不是文件: %s</string>
+    <string name="copy_failed">复制文件失败: %s</string>
+    <string name="set_permission_failed">设置失败：%s</string>
+    <string name="file_not_exists">文件不存在或不是文件: %s</string>
+    <string name="read_file_failed">读取文件失败: %s</string>
+    <string name="cannot_delete_file">无法删除文件: %s</string>
+    <string name="zip_open_failed">无法打开ZIP文件输入流</string>
+    <string name="cannot_create_dir">无法创建目录: %s</string>
+    <string name="zip_extract_error">ZIP解压失败: %s</string>
+    <string name="kernel_version_failed">获取内核版本失败: %s</string>
+    <string name="unknown_kernel">未知</string>
+    <string name="no_arch_files">未找到适用于 %s 架构的文件</string>
+    <string name="save_failed">保存失败: %s</string>
+    <string name="server_version_unknown">未知版本</string>
+    <string name="no_root_permission">没有Root权限，无法强制停止应用</string>
+    <string name="no_root_freeze">没有Root权限，无法冻结应用</string>
+    <string name="no_root_unfreeze">没有Root权限，无法解冻应用</string>
+    <string name="check_su_failed">检查su命令失败: %s</string>
+    <string name="server_already_running">服务已在运行中</string>
+    <string name="server_no_root_permission">未获取Root权限，无法启动服务</string>
+    <string name="server_no_current_version">未找到当前服务版本信息</string>
+    <string name="server_start_success_version">服务启动成功，版本: %s</string>
+    <string name="server_start_verify_failed">服务启动失败，无法验证运行状态</string>
+    <string name="server_start_exception">服务启动异常: %s</string>
+    <string name="server_stop_no_root">未获取Root权限，无法启动服务</string>
+    <string name="server_stop_no_version">未找到当前服务版本信息</string>
+    <string name="server_stop_exception">服务启动异常: %s</string>
+    <string name="server_not_running_check">服务未在运行</string>
+    <string name="server_stop_command_failed">停止服务器命令执行失败，返回码: %d</string>
+    <string name="server_stop_exception_error">停止服务器异常: %s</string>
+    <string name="read_server_output_failed">读取Server输出失败: %s</string>
+    <string name="read_server_error_failed">读取Server错误输出失败: %s</string>
+    <string name="server_output">Server输出: %s</string>
+    <string name="server_error">Server错误: %s</string>
+    <string name="target_activity_cancelled">目标 Activity 被取消或未成功启动</string>
+
+    <string name="plugin_need_dynamic_config">需要启动插件app动态来获取配置</string>
+    <string name="tab_server_status">状态</string>
+    
+    <string name="checking_ellipsis">检查中...</string>
+    <string name="core_management_title">核心模块管理</string>
+    <string name="core_import_zip">导入核心(ZIP)</string>
+    <string name="core_installed_version_title">已安装版本</string>
+    <string name="core_no_modules_message">暂无核心模块，请导入ZIP包</string>
+    <string name="root_path_config_title">Root路径配置</string>
+    <string name="server_run_path_title">服务运行路径</string>
+    <string name="server_run_path_hint_text">服务组件将在此路径下运行</string>
+    <string name="save_path_title">保存路径</string>
+    <string name="server_address">Server地址</string>
+    <string name="server_listen_address">服务运行监听地址</string>
+    <string name="server_listen_address_hint">请输入服务运行监听地址</string>
+    <string name="su_file_path">su文件路径</string>
+    <string name="su_file_path_hint">如果app找不到su文件，需要手动配置su路径</string>
+    <string name="su_file_path_input_hint">请输入su文件路径</string>
+    <string name="copy_button">复制</string>
+    <string name="show_system_apps">显示系统应用</string>
+    <string name="filter_plugins">过滤插件</string>
+    <string name="select_all">全选</string>
+    <string name="deselect_all">取消全选</string>
+    <string name="select_target_apps">选择目标应用</string>
+    <string name="menu_button">菜单</string>
+    <string name="path_info">路径信息</string>
+    <string name="time_info">时间信息</string>
+    <string name="system_info">系统信息</string>
+    <string name="add_first_plugin">添加第一个插件</string>
+    <string name="plugin_name_default_text">Plugin Name</string>
+    <string name="delete_button">删除</string>
+    <string name="system_tag">系统</string>
+    <string name="version_default_text">v1.0.0</string>
+    <string name="current_using_tag">使用</string>
+    <string name="switch_button">切换</string>
+    <string name="delete_button_text">删除</string>
+    <string name="architecture_support_format">架构: arm64-v8a (支持32位)</string>
+    <string name="version_description_label">版本描述:</string>
+    <string name="version_description_default_text">修复了已知bug，提升了稳定性和性能...</string>
+    <string name="view_all_button">查看全部</string>
+    <string name="read_storage_directory_title">读取存储目录</string>
+    <string name="meta_data_properties_title">Meta-Data属性:</string>
+    <string name="loading_ellipsis">加载中...</string>
+    <string name="file_icon">📁</string>
+    <string name="file_name_title">文件名</string>
+    <string name="file_details_title">文件详情</string>
+    <string name="sys_tag_text">sys</string>
+    <string name="inject_tag_text">inject</string>
+    <string name="plugin_tag_text">插件</string>
+    <string name="clear_log_button">清空日志</string>
+    <string name="add_plugin_menu">添加插件</string>
+    <string name="show_system_apps_menu">显示系统应用</string>
+    <string name="select_all_menu">全选</string>
+    <string name="deselect_all_menu">取消全选</string>
+    <string name="force_add_as_plugin">强制添加为插件</string>
+    <string name="cancel_menu">取消</string>
+    <string name="albatross_manager_title">Albatross Manager</string>
+    <string name="app_count_format_default">0 个应用</string>
+    
+    <!-- Toast messages and dialogs -->
+    <string name="enter_correct_su_path">请输入正确的su路径</string>
+    <string name="enter_correct_server_path">请输入正确的server路径</string>
+    <string name="enter_root_path_message">请输入Root路径</string>
+    <string name="root_path_saved_success">Root路径保存成功</string>
+    <string name="processing_server_components">正在处理服务组件...</string>
+    <string name="zip_extract_failed_message">ZIP文件解压失败</string>
+    <string name="zip_incomplete_message">ZIP包不完整，缺少version文件</string>
+    <string name="version_read_failed_message">无法读取版本信息</string>
+    <string name="no_description_info">无描述信息</string>
+    <string name="version_exists_title">版本已存在</string>
+    <string name="version_exists_message_format">版本 %s 已存在，是否覆盖?</string>
+    <string name="overwrite_button">覆盖</string>
+    <string name="cancel_button">取消</string>
+    <string name="processing_failed_format">处理失败: %s</string>
+    <string name="no_arch_files_format">未找到适用于 %s 架构的文件</string>
+    <string name="core_import_success_format">核心组件 %s 导入成功</string>
+    <string name="core_import_success_default_format">核心组件 %s 导入成功，设为默认,重启生效</string>
+    <string name="save_failed_format">保存失败: %s</string>
+    <string name="switch_version_title">切换版本</string>
+    <string name="switch_version_confirm_format">确定要切换到版本 %s 吗？切换后将关闭原有服务,需要重启应用生效。</string>
+    <string name="confirm_button">确定</string>
+    <string name="version_description_title_format">版本 %s 描述</string>
+    <string name="close_button">关闭</string>
+    <string name="copy_description_button">复制描述</string>
+    <string name="description_copied">描述已复制</string>
+    <string name="cannot_delete_current_version">不能删除当前正在使用的版本</string>
+    <string name="delete_version_title">删除版本</string>
+    <string name="delete_version_confirm_format">确定要删除版本 %s 吗？此操作不可恢复。</string>
+    <string name="delete_confirm_button">删除</string>
+    <string name="version_switched_title">版本已切换</string>
+    <string name="restart_app_for_version_switch">请重启应用使版本切换生效</string>
+    <string name="restart_now_button">立即重启</string>
+    <string name="restart_later_button">稍后重启</string>
+    <string name="server_already_running_message">服务已在运行中</string>
+    <string name="no_root_permission_start_server">未获取Root权限，无法启动服务</string>
+    <string name="no_current_server_version">未找到当前服务版本信息</string>
+    <string name="server_start_success_version_format">服务启动成功，版本: %s</string>
+    <string name="server_start_verify_failed_message">服务启动失败，无法验证运行状态</string>
+    <string name="server_start_exception_format">服务启动异常: %s</string>
+    <string name="server_stop_no_root_permission">未获取Root权限，无法启动服务</string>
+    <string name="server_stop_exception_format">服务启动异常: %s</string>
+    <string name="server_not_running_check_message">服务未在运行</string>
+    <string name="server_stop_command_failed_format">停止服务器命令执行失败，返回码: %d</string>
+    <string name="server_stop_exception_error_format">停止服务器异常: %s</string>
+    <string name="read_server_output_failed_format">读取Server输出失败: %s</string>
+    <string name="read_server_error_failed_format">读取Server错误输出失败: %s</string>
+    <string name="server_output_format">Server输出: %s</string>
+    <string name="server_error_format">Server错误: %s</string>
+    <string name="target_activity_cancelled_message">目标 Activity 被取消或未成功启动</string>
+    <string name="plugin_need_dynamic_config_message">需要启动插件app动态来获取配置</string>
+    <string name="tab_server_status_title">状态</string>
+    <string name="injection_successful">注入成功</string>
+    <string name="get_plugin_info_failed">获取插件信息失败</string>
+    <string name="plugin_enabled_status">插件已启用</string>
+    <string name="plugin_disabled_status">插件已禁用</string>
+    <string name="param1_empty_cannot_copy">参数1为空，无法复制</string>
+    <string name="param1_copied_to_clipboard">参数1已复制到剪贴板</string>
+    <string name="enter_param1_message">请输入参数1</string>
+    <string name="param2_must_be_number_message">参数2必须是数字</string>
+    <string name="config_saved_message">配置已保存</string>
+    <string name="load_app_list_failed_format">加载应用列表失败: %s</string>
+    <string name="storage_not_found_message">未找到存储目录或无权限访问</string>
+    <string name="injection_warning_message">注入可能导致app崩溃，或者被app检测到风险，确定是否注入?需要重启app生效.</string>
+    <string name="injection_immediate_warning_message">注入可能导致app崩溃，或者被app检测到风险，确定是否注入?</string>
+    <string name="enter_string_param_hint">请输入字符串参数（支持多行输入）</string>
+    <string name="enter_number_param_hint">请输入数值参数</string>
+    <string name="search_app_name_or_package_hint">搜索应用名称或包名</string>
+    <string name="search_plugin_name_or_package_hint">搜索插件名称或包名</string>
+    <string name="selinux_status_title">Selinux状态:</string>
+    <string name="check_core_availability_button">加载核心</string>
+    <string name="finish_core_availability_message">已检查核心兼容性</string>
+    <string name="unfreeze_app_button">解冻</string>
+    <string name="app_unfrozen_status">应用已解冻</string>
+    <string name="app_unfreeze_failed_message">解冻应用失败</string>
+    <string name="plugin_enabled_title">启用插件</string>
+    <string name="plugin_app_uninstalled_message">插件应用已卸载，无法正常使用</string>
+    
+    <!-- App Actions Menu -->
+    <string name="more_actions">更多</string>
+    <string name="inject_action">注入插件</string>
+    <string name="unload_action">关闭插件</string>
+    <string name="disable_action">关闭应用</string>
+    <string name="open_action">打开应用</string>
+    <string name="unload_feature_pending">卸载功能待实现</string>
+    <string name="disable_feature_pending">禁用功能待实现</string>
+    <string name="cannot_open_app">无法打开应用</string>
+    <string name="open_app_failed">打开应用失败: %s</string>
+</resources>

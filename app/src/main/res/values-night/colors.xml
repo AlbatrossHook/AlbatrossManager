@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Material Design 3 Dark Theme Color System -->
+    
+    <!-- Primary Colors -->
+    <color name="primary">#D0BCFF</color>
+    <color name="on_primary">#381E72</color>
+    <color name="primary_container">#4F378B</color>
+    <color name="on_primary_container">#EADDFF</color>
+    
+    <!-- Secondary Colors -->
+    <color name="secondary">#CCC2DC</color>
+    <color name="on_secondary">#332D41</color>
+    <color name="secondary_container">#4A4458</color>
+    <color name="on_secondary_container">#E8DEF8</color>
+    
+    <!-- Tertiary Colors -->
+    <color name="tertiary">#EFB8C8</color>
+    <color name="on_tertiary">#492532</color>
+    <color name="tertiary_container">#633B48</color>
+    <color name="on_tertiary_container">#FFD8E4</color>
+    
+    <!-- Accent Color (alias for tertiary) -->
+    <color name="accent">#EFB8C8</color>
+    
+    <!-- Error Colors -->
+    <color name="error">#F2B8B5</color>
+    <color name="on_error">#601410</color>
+    <color name="error_container">#8C1D18</color>
+    <color name="on_error_container">#FFDAD6</color>
+    
+    <!-- Background Colors -->
+    <color name="background">#1C1B1F</color>
+    <color name="on_background">#E6E1E5</color>
+    <color name="surface">#1C1B1F</color>
+    <color name="on_surface">#E6E1E5</color>
+    <color name="surface_variant">#49454F</color>
+    <color name="on_surface_variant">#CAC4D0</color>
+    
+    <!-- Outline Colors -->
+    <color name="outline">#938F99</color>
+    <color name="outline_variant">#49454F</color>
+    
+    <!-- Surface Tint -->
+    <color name="surface_tint">#D0BCFF</color>
+    
+    <!-- Status Colors -->
+    <color name="success">#81C784</color>
+    <color name="success_container">#2E7D32</color>
+    <color name="warning">#FFB74D</color>
+    <color name="warning_container">#E65100</color>
+    <color name="info">#64B5F6</color>
+    <color name="info_container">#1565C0</color>
+    
+    <!-- Text Colors -->
+    <color name="text_primary">#E6E1E5</color>
+    <color name="text_secondary">#CAC4D0</color>
+    <color name="text_disabled">#938F99</color>
+    <color name="text_hint">#49454F</color>
+    
+    <!-- Card and Component Colors -->
+    <color name="card_background">#2B2930</color>
+    <color name="card_elevated">#36343B</color>
+    <color name="divider">#49454F</color>
+    <color name="divider_focus">#D0BCFF</color>
+    
+    <!-- Interactive Colors -->
+    <color name="ripple">#1FD0BCFF</color>
+    <color name="hover">#0FD0BCFF</color>
+    <color name="focus">#1FD0BCFF</color>
+    <color name="pressed">#2FD0BCFF</color>
+    
+    <!-- Tab Colors -->
+    <color name="tab_selected">#D0BCFF</color>
+    <color name="tab_unselected">#CAC4D0</color>
+    <color name="tab_indicator">#D0BCFF</color>
+    
+    <!-- Legacy Compatibility -->
+    <color name="primary_color">#D0BCFF</color>
+    <color name="primary_dark">#4F378B</color>
+    <color name="primary_light">#EADDFF</color>
+    <color name="background_light">#1C1B1F</color>
+    <color name="surface_color">#2B2930</color>
+    <color name="divider_color">#49454F</color>
+    <color name="red_light">#8C1D18</color>
+    <color name="red_dark">#F2B8B5</color>
+    <color name="green">#81C784</color>
+    <color name="red">#F2B8B5</color>
+    <color name="gray">#938F99</color>
+    <color name="blue">#64B5F6</color>
+    <color name="green_light">#2E7D32</color>
+    <color name="gray_light">#36343B</color>
+    <color name="purple">#D0BCFF</color>
+    <color name="orange">#FFB74D</color>
+    
+    <!-- Button Text Colors for Dark Theme -->
+    <color name="button_text_primary">#FFFFFF</color>
+    <color name="button_text_secondary">#E6E1E5</color>
+    <color name="button_text_on_success">#000000</color>
+    <color name="button_text_on_warning">#000000</color>
+    <color name="button_text_on_error">#FFFFFF</color>
+    <color name="button_text_on_accent">#000000</color>
+</resources>

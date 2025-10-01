@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_show_system"
+        android:title="@string/show_system_apps_menu"
+        android:checkable="true"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_select_all"
+        android:title="@string/select_all_menu"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_deselect_all"
+        android:title="@string/deselect_all_menu"
+        app:showAsAction="never" />
+
+</menu>
