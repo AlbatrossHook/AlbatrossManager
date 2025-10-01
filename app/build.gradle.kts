@@ -63,6 +63,31 @@ android {
     }
 }
 
+val releaseApkRename by tasks.registering {
+    doLast {
+        val versionNameValue = libs.versions.versionName.get()
+        val apkDir = layout.buildDirectory.dir("outputs/apk/release").get().asFile
+        if (!apkDir.exists()) return@doLast
+        val candidates = listOf(
+            "app-release.apk",
+            "app-release-unsigned.apk"
+        )
+        val dest = layout.buildDirectory.file("outputs/apk/release/AlbatrossManager-$versionNameValue.apk").get().asFile
+        for (name in candidates) {
+            val src = layout.buildDirectory.file("outputs/apk/release/$name").get().asFile
+            if (src.exists()) {
+                src.copyTo(dest, overwrite = true)
+                src.delete()
+                break
+            }
+        }
+    }
+}
+
+tasks.matching { it.name == "assembleRelease" }.configureEach {
+    finalizedBy(releaseApkRename)
+}
+
 dependencies {
     compileOnly(files("../lib/albatross.jar"))
     implementation(libs.appcompat)
