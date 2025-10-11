@@ -11,7 +11,7 @@ Albatross Hook 插件生态的管理应用。该应用用于在已 Root 的 Andr
 - 编译版本：Compile SDK 36
 - 语言/工具链：Java 17、AndroidX、AGP 8.x
 - 核心依赖：`lib/albatross.jar`（以 `compileOnly` 方式提供）
-- Root 要求：是（Hook 功能需要设备 Root）
+- 设备要求：需要root权限，对root方式没有要求，但和lsposed有冲突，必须关闭lsposed模块
 
 ## 演示
 

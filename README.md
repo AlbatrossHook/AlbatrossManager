@@ -14,7 +14,7 @@ If you are developing a plugin, see the reference project: `https://github.com/A
 - Compile SDK: 36
 - Language/Tooling: Java 17 (AGP 8.x), AndroidX
 - Core dependency: `lib/albatross.jar` (provided as `compileOnly`)
-- Root required: Yes (device must be rooted for hook to function)
+- Device requirements: Root permission is required, there is no requirement for root mode, but it conflicts with lspose and the lspose module must be closed
 
 ## Demo
 
