@@ -168,7 +168,7 @@ public class ServerStatusFragment extends Fragment {
       String finalFeature = feature;
       handler.post(() -> {
         checkCoreButton.setText(getString(R.string.finish_core_availability));
-        if (isCoreAvailable) {
+        if (isCoreAvailable != null && isCoreAvailable) {
           coreStatusText.setText(getString(R.string.core_available));
           coreStatusText.setTextColor(getResources().getColor(R.color.green));
           if (finalFeature != null) {
