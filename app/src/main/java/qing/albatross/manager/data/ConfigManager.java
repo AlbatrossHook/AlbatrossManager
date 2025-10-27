@@ -30,12 +30,10 @@ public class ConfigManager {
   private static final String KEY_SU_FILE_PATH = "su_file_path";
   private static final String KEY_SERVER_ADDRESS = "server_address";
   private static final String KEY_SERVER_FILE_NAME = "server_file_name";
-  private static final String KEY_SYS_AGENT_FILE_NAME = "sys_agent";
-  private static final String KEY_APP_AGENT_FILE_NAME = "app_agent";
 
   private static final String KEY_SERVER_RUNNING_STATE = "server_running_state";
+  private static final String KEY_CORE_AVAIL_STATE = "core_availability";
   private static final String KEY_LAST_SERVER_UPDATE = "last_server_update";
-  private static final String DEFAULT_SU_PATH = "/system/bin/su";
 
   private static ConfigManager instance;
   private final SharedPreferences sharedPreferences;
@@ -70,9 +68,6 @@ public class ConfigManager {
   }
 
 
-  public void saveServerFileName(String fileName) {
-    sharedPreferences.edit().putString(KEY_SERVER_FILE_NAME, fileName).apply();
-  }
 
   public String getServerAddress() {
     return sharedPreferences.getString(KEY_SERVER_ADDRESS, "albatross_manager");
@@ -82,16 +77,12 @@ public class ConfigManager {
     sharedPreferences.edit().putString(KEY_SERVER_ADDRESS, address).apply();
   }
 
-  public String getAppAgentFileName() {
-    return sharedPreferences.getString(KEY_APP_AGENT_FILE_NAME, null);
+  public void saveCoreState(boolean available) {
+    sharedPreferences.edit().putBoolean(KEY_CORE_AVAIL_STATE, available).apply();
   }
 
-  public void saveSysAgentFileName(String fileName) {
-    sharedPreferences.edit().putString(KEY_SYS_AGENT_FILE_NAME, fileName).apply();
-  }
-
-  public String getSysAgentFileName() {
-    return sharedPreferences.getString(KEY_SYS_AGENT_FILE_NAME, null);
+  public boolean getCoreState() {
+    return sharedPreferences.getBoolean(KEY_CORE_AVAIL_STATE, false);
   }
 
   /**
@@ -139,6 +130,7 @@ public class ConfigManager {
         .remove(KEY_SERVER_FILE_NAME)
         .remove(KEY_LAST_SERVER_UPDATE)
         .remove(KEY_SERVER_RUNNING_STATE)
+        .remove(KEY_CORE_AVAIL_STATE)
         .apply();
   }
 }

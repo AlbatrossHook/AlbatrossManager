@@ -19,12 +19,14 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.File;
 import java.util.List;
 
 import qing.albatross.app.agent.client.DisconnectException;
 import qing.albatross.app.agent.client.ShellExecResult;
+import qing.albatross.core.Albatross;
 import qing.albatross.manager.data.ConfigManager;
 import qing.albatross.manager.data.Plugin;
 import qing.albatross.manager.data.PluginDatabaseHelper;
@@ -36,6 +38,7 @@ public final class PluginDelegate {
 
   public static final byte DEX_LOAD_SUCCESS = 20;
   PluginConnection connection;
+  boolean isLsposedInjected;
   static PluginDelegate instance;
 
   public static boolean isServerRunning() {
@@ -47,7 +50,7 @@ public final class PluginDelegate {
         throw new RuntimeException(e);
       }
       if (closed) {
-       disconnection();
+        disconnection();
         return false;
       }
       return true;
@@ -65,6 +68,14 @@ public final class PluginDelegate {
     try {
       PluginConnection connection = instance.connection;
       if (connection != null) {
+        if (connection.isLsposedInjected()) {
+          instance.isLsposedInjected = true;
+          Albatross.getMainHandler().post(() -> {
+            Toast.makeText(Albatross.currentApplication(), "检测到lspoed注入了，无法使用launch模式，仅支持立即注入到lsposed未注入的app中", Toast.LENGTH_SHORT).show();
+          });
+          return true;
+        }
+        instance.isLsposedInjected = false;
         PluginDatabaseHelper databaseHelper = PluginDatabaseHelper.getInstance(context);
         List<Plugin> plugins = databaseHelper.getAllPlugins();
         for (Plugin plugin : plugins) {
@@ -116,6 +127,13 @@ public final class PluginDelegate {
       if (connection != null) {
         instance = new PluginDelegate();
         instance.connection = connection;
+        instance.isLsposedInjected = connection.isLsposedInjected();
+        if (instance.isLsposedInjected) {
+          Albatross.getMainHandler().post(() -> {
+            Toast.makeText(Albatross.currentApplication(), "检测到lspoed注入了，无法使用launch模式，仅支持立即注入到lsposed未注入的app中", Toast.LENGTH_SHORT).show();
+          });
+          return true;
+        }
         PluginDatabaseHelper databaseHelper = PluginDatabaseHelper.getInstance(context);
         List<Plugin> plugins = databaseHelper.getAllPlugins();
         for (Plugin plugin : plugins) {
@@ -238,6 +256,12 @@ public final class PluginDelegate {
 
   public boolean addPluginRule(int pluginId, String targetPkg) {
     try {
+      if (isLsposedInjected) {
+        Albatross.getMainHandler().post(() -> {
+          Toast.makeText(Albatross.currentApplication(), "检测到lspoed注入了，无法使用launch模式，仅支持立即注入到lsposed未注入的app中", Toast.LENGTH_SHORT).show();
+        });
+        return false;
+      }
       byte res = connection.addPluginRule(pluginId, targetPkg);
       return res == 0;
     } catch (Throwable e) {

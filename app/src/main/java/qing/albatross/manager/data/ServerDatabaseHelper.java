@@ -33,7 +33,7 @@ public class ServerDatabaseHelper extends SQLiteOpenHelper {
   private static final String DATABASE_NAME = "server_versions.db";
   private static final int DATABASE_VERSION = 2; // 升级数据库版本
   private static ServerDatabaseHelper instance;
-  
+
   // 读写锁，用于控制多线程访问
   private final ReadWriteLock lock = new ReentrantReadWriteLock();
 
@@ -215,7 +215,7 @@ public class ServerDatabaseHelper extends SQLiteOpenHelper {
       lock.writeLock().unlock();
     }
   }
-  
+
   /**
    * 内部方法：设置当前服务器版本（不获取锁，供内部调用）
    */
@@ -226,6 +226,7 @@ public class ServerDatabaseHelper extends SQLiteOpenHelper {
 
     db.insertWithOnConflict(TABLE_CONFIG, null, values,
         SQLiteDatabase.CONFLICT_REPLACE);
+    ConfigManager.getInstance(null).saveCoreState(false);
   }
 
   public String getCurrentServerVersion() {
@@ -236,7 +237,7 @@ public class ServerDatabaseHelper extends SQLiteOpenHelper {
       lock.readLock().unlock();
     }
   }
-  
+
   /**
    * 内部方法：获取当前服务器版本（不获取锁，供内部调用）
    */
@@ -327,7 +328,7 @@ public class ServerDatabaseHelper extends SQLiteOpenHelper {
       lock.readLock().unlock();
     }
   }
-  
+
   /**
    * 关闭数据库连接（谨慎使用，通常不需要手动调用）
    */
@@ -343,7 +344,7 @@ public class ServerDatabaseHelper extends SQLiteOpenHelper {
       }
     }
   }
-  
+
   /**
    * 确保数据库连接可用
    */

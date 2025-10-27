@@ -43,7 +43,6 @@ import qing.albatross.manager.utils.ClassLoaderUtils;
 import qing.albatross.manager.utils.SELinuxManager;
 import qing.albatross.manager.utils.ServerManager;
 import qing.albatross.manager.utils.SystemUtils;
-import qing.albatross.plugin.PluginConnection;
 
 public class ServerStatusFragment extends Fragment {
 
@@ -85,6 +84,9 @@ public class ServerStatusFragment extends Fragment {
       engineVersionText.setText(getString(R.string.core_not_available));
       engineVersionText.setTextColor(getResources().getColor(R.color.red));
       checkCoreButton.setText(getString(R.string.core_no_modules));
+    }
+    if (ConfigManager.getInstance(getContext()).getCoreState()) {
+      checkCoreAvailability();
     }
     // 初始化状态显示
     coreStatusText.setText(getString(R.string.checking));
@@ -148,6 +150,7 @@ public class ServerStatusFragment extends Fragment {
             reason = "init fail:" + e;
           }
           if (isCoreAvailable) {
+            ConfigManager.getInstance(getContext()).saveCoreState(true);
             feature = Albatross.supportFeatures();
             PluginDelegate delegate = PluginDelegate.create(dbHelper, requireContext());
             if (delegate != null) {
