@@ -35,6 +35,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
+import qing.albatross.manager.data.ServerDatabaseHelper;
 import qing.albatross.manager.model.AppInfo;
 import qing.albatross.manager.plugin.PluginDelegate;
 
@@ -232,6 +233,7 @@ public class AppUtils {
    * 强制停止应用（需要Root权限）
    */
   public static boolean forceStopApp(Context context, String packageName) {
+    PluginDelegate.ensureConnected(ServerDatabaseHelper.getInstance(context), context);
     PluginDelegate delegate = PluginDelegate.get();
     if (delegate != null) {
       if (delegate.forceStopApp(packageName))
@@ -241,25 +243,14 @@ public class AppUtils {
       Log.e(TAG, "没有Root权限，无法强制停止应用");
       return false;
     }
-    try {
-      // 执行su命令强制停止应用
-      Process process = Runtime.getRuntime().exec("su");
-      DataOutputStream os = new DataOutputStream(process.getOutputStream());
-      os.writeBytes("am force-stop " + packageName + "\n");
-      os.writeBytes("exit\n");
-      os.flush();
-      int result = process.waitFor();
-      return result == 0;
-    } catch (IOException | InterruptedException e) {
-      e.printStackTrace();
-      return false;
-    }
+    return ServerManager.getInstance(context).runSuChecked("am force-stop " + packageName);
   }
 
   /**
    * 冻结应用（需要Root权限）
    */
   public static boolean freezeApp(Context context, String packageName) {
+    PluginDelegate.ensureConnected(ServerDatabaseHelper.getInstance(context), context);
     PluginDelegate delegate = PluginDelegate.get();
     if (delegate != null) {
       if (delegate.freezeApp(packageName))
@@ -269,25 +260,14 @@ public class AppUtils {
       Log.e(TAG, "没有Root权限，无法冻结应用");
       return false;
     }
-    try {
-      // 执行su命令冻结应用
-      Process process = Runtime.getRuntime().exec("su");
-      DataOutputStream os = new DataOutputStream(process.getOutputStream());
-      os.writeBytes("pm disable " + packageName + "\n");
-      os.writeBytes("exit\n");
-      os.flush();
-      int result = process.waitFor();
-      return result == 0;
-    } catch (IOException | InterruptedException e) {
-      e.printStackTrace();
-      return false;
-    }
+    return ServerManager.getInstance(context).runSuChecked("pm disable " + packageName);
   }
 
   /**
    * 解冻应用（需要Root权限）
    */
   public static boolean unfreezeApp(Context context, String packageName) {
+    PluginDelegate.ensureConnected(ServerDatabaseHelper.getInstance(context), context);
     PluginDelegate delegate = PluginDelegate.get();
     if (delegate != null) {
       if (delegate.unfreezeApp(packageName))
@@ -297,36 +277,22 @@ public class AppUtils {
       Log.e(TAG, "没有Root权限，无法解冻应用");
       return false;
     }
-    try {
-      Process process = Runtime.getRuntime().exec("su");
-      DataOutputStream os = new DataOutputStream(process.getOutputStream());
-      os.writeBytes("pm enable " + packageName + "\n");
-      os.writeBytes("exit\n");
-      os.flush();
-      int result = process.waitFor();
-      return result == 0;
-    } catch (IOException | InterruptedException e) {
-      e.printStackTrace();
-      return false;
-    }
+    return ServerManager.getInstance(context).runSuChecked("pm enable " + packageName);
   }
 
   /**
    * 检查应用是否被冻结
    */
   public static boolean isAppFrozen(Context context, String packageName) {
-    try {
-      Process process = Runtime.getRuntime().exec("su");
-      DataOutputStream os = new DataOutputStream(process.getOutputStream());
-      os.writeBytes("pm list packages -d | grep " + packageName + "\n");
-      os.writeBytes("exit\n");
-      os.flush();
-      int result = process.waitFor();
-      return result == 0;
-    } catch (IOException | InterruptedException e) {
-      e.printStackTrace();
-      return false;
+    String disabled = null;
+    PluginDelegate delegate = PluginDelegate.get();
+    if (delegate != null) {
+      disabled = delegate.shell("pm list packages -d");
     }
+    if (disabled == null) {
+      disabled = ServerManager.getInstance(context).runSuCommand("pm list packages -d");
+    }
+    return disabled != null && disabled.contains("package:" + packageName);
   }
 
 }

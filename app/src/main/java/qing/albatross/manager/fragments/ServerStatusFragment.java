@@ -23,23 +23,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import java.io.File;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import qing.albatross.core.Albatross;
+import com.google.android.material.color.MaterialColors;
+
 import qing.albatross.manager.R;
 import qing.albatross.manager.activity.MainActivity;
 import qing.albatross.manager.data.ConfigManager;
 import qing.albatross.manager.data.ServerDatabaseHelper;
-import qing.albatross.manager.model.ServerInfo;
 import qing.albatross.manager.plugin.PluginDelegate;
-import qing.albatross.manager.utils.ClassLoaderUtils;
+import qing.albatross.manager.utils.CoreBootstrap;
+import qing.albatross.manager.utils.RuntimeOptions;
 import qing.albatross.manager.utils.SELinuxManager;
 import qing.albatross.manager.utils.ServerManager;
 import qing.albatross.manager.utils.SystemUtils;
@@ -49,10 +50,14 @@ public class ServerStatusFragment extends Fragment {
   private TextView serverStatusText;
   private TextView coreStatusText;
   private TextView engineFeature;
+  private TextView tvServerCost;
+  private TextView tvRuntimeOptions;
   private Button toggleServerButton;
   private Button checkCoreButton;
+  private ProgressBar serverProgress;
   private TextView tvDeviceModel;
   private boolean isServerRunning = false;
+  private boolean autoStartTriggered = false;
 
   private ServerManager serverManager;
   ExecutorService executor = Executors.newSingleThreadExecutor();
@@ -71,9 +76,14 @@ public class ServerStatusFragment extends Fragment {
     checkCoreButton = view.findViewById(R.id.check_core_button);
     TextView engineVersionText = view.findViewById(R.id.tv_engine_version);
     engineFeature = view.findViewById(R.id.tv_engine_support);
+    tvServerCost = view.findViewById(R.id.tv_server_cost);
+    tvRuntimeOptions = view.findViewById(R.id.tv_runtime_options);
+    serverProgress = view.findViewById(R.id.server_progress);
     tvDeviceModel = view.findViewById(R.id.tv_device_model);
     dbHelper = ServerDatabaseHelper.getInstance(requireContext());
     serverManager = ServerManager.getInstance(getContext());
+    tvRuntimeOptions.setText(getString(R.string.option_state_title) + " " + RuntimeOptions.describe(
+        requireContext(), getString(R.string.state_on), getString(R.string.state_off)));
 
     String currentVersion = dbHelper.getCurrentServerVersion();
     if (currentVersion != null) {
@@ -82,7 +92,7 @@ public class ServerStatusFragment extends Fragment {
       toggleServerButton.setOnClickListener(v -> toggleServerStatus());
     } else {
       engineVersionText.setText(getString(R.string.core_not_available));
-      engineVersionText.setTextColor(getResources().getColor(R.color.red));
+      engineVersionText.setTextColor(MaterialColors.getColor(engineVersionText, androidx.appcompat.R.attr.colorError));
       checkCoreButton.setText(getString(R.string.core_no_modules));
     }
     if (ConfigManager.getInstance(getContext()).getCoreState()) {
@@ -109,18 +119,24 @@ public class ServerStatusFragment extends Fragment {
       handler.post(() -> {
         if (isServerRunning) {
           serverStatusText.setText(getString(R.string.server_running));
-          serverStatusText.setTextColor(getResources().getColor(R.color.green));
+          serverStatusText.setTextColor(MaterialColors.getColor(serverStatusText, R.attr.colorSuccess));
           toggleServerButton.setText(getString(R.string.stop_server));
+          long cost = serverManager.getLastStartCostMs();
+          if (cost > 0) {
+            tvServerCost.setText(getString(R.string.server_start_cost_format, cost / 1000f));
+            tvServerCost.setVisibility(View.VISIBLE);
+          }
         } else {
           serverStatusText.setText(getString(R.string.server_not_running));
-          serverStatusText.setTextColor(getResources().getColor(R.color.red));
+          serverStatusText.setTextColor(MaterialColors.getColor(serverStatusText, androidx.appcompat.R.attr.colorError));
           toggleServerButton.setText(getString(R.string.start_server));
+          tvServerCost.setVisibility(View.GONE);
         }
+        autoStartServerIfNeeded();
       });
     });
   }
 
-  ServerInfo serverInfo;
   Boolean isCoreAvailable = null;
 
   private void checkCoreAvailability() {
@@ -128,57 +144,24 @@ public class ServerStatusFragment extends Fragment {
     checkCoreButton.setEnabled(false);
     checkCoreButton.setText(getString(R.string.checking));
     executor.execute(() -> {
-      ServerInfo currentServerInfo = dbHelper.getCurrentServerInfo();
-      serverInfo = currentServerInfo;
-      String libPath = serverInfo.getLibPath();
-      String agentDir = serverInfo.getAgentPath();
-
-      String dexPath = agentDir + "/" + "app_agent.dex";
-      File agentDirFile = new File(dexPath);
-      File libFile = new File(libPath);
-      String feature = null;
-      String reason = null;
-      if (agentDirFile.exists() && libFile.exists()) {
-        int i = libPath.lastIndexOf('/');
-        String libDir = libPath.substring(0, i);
-        String libName = libPath.substring(i + 4, libPath.length() - 3);
-        try {
-          try {
-            ClassLoaderUtils.patchClassLoader(this.getClass().getClassLoader(), dexPath, libDir);
-            isCoreAvailable = Albatross.loadLibrary(libName, 0);
-          } catch (Throwable e) {
-            reason = "init fail:" + e;
-          }
-          if (isCoreAvailable) {
-            ConfigManager.getInstance(getContext()).saveCoreState(true);
-            feature = Albatross.supportFeatures();
-            PluginDelegate delegate = PluginDelegate.create(dbHelper, requireContext());
-            if (delegate != null) {
-              isServerRunning = true;
-            }
-          }
-        } catch (Throwable e) {
-          reason = e.toString();
-        }
-      } else {
-        reason = "file not exists";
+      CoreBootstrap.Result result = CoreBootstrap.load(requireContext());
+      isCoreAvailable = result.ok;
+      if (result.ok && result.connected) {
+        isServerRunning = true;
       }
-      // 在主线程更新UI
-      String finalReason = reason;
-      String finalFeature = feature;
       handler.post(() -> {
         checkCoreButton.setText(getString(R.string.finish_core_availability));
-        if (isCoreAvailable != null && isCoreAvailable) {
+        if (result.ok) {
           coreStatusText.setText(getString(R.string.core_available));
-          coreStatusText.setTextColor(getResources().getColor(R.color.green));
-          if (finalFeature != null) {
-            engineFeature.setText(finalFeature);
+          coreStatusText.setTextColor(MaterialColors.getColor(coreStatusText, R.attr.colorSuccess));
+          if (result.features != null) {
+            engineFeature.setText(result.features);
           }
           checkServerStatus(false);
         } else {
           coreStatusText.setText(getString(R.string.core_not_supported));
-          coreStatusText.setTextColor(getResources().getColor(R.color.red));
-          Toast.makeText(requireContext(), "init fail:" + finalReason, Toast.LENGTH_LONG).show();
+          coreStatusText.setTextColor(MaterialColors.getColor(coreStatusText, androidx.appcompat.R.attr.colorError));
+          Toast.makeText(requireContext(), getString(R.string.core_init_fail_format, result.error), Toast.LENGTH_LONG).show();
         }
       });
     });
@@ -186,26 +169,35 @@ public class ServerStatusFragment extends Fragment {
 
   private void toggleServerStatus() {
     toggleServerButton.setEnabled(false);
-    if (!isServerRunning)
-      toggleServerButton.setText("启动中..");
-    else
-      toggleServerButton.setText("关闭服务中..");
+    boolean starting = !isServerRunning;
+    toggleServerButton.setText(starting ? getString(R.string.server_starting) : getString(R.string.server_stopping));
+    serverProgress.setVisibility(View.VISIBLE);
     executor.execute(() -> {
-      try {
-        if (!isServerRunning) {
-          serverManager.startServer();
-        } else {
-          serverManager.stopServer();
-        }
-        Thread.sleep(1000);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
+      if (starting) {
+        serverManager.startServer();
+      } else {
+        serverManager.stopServer();
       }
       handler.post(() -> {
-        checkServerStatus(false);
+        serverProgress.setVisibility(View.GONE);
         toggleServerButton.setEnabled(true);
+        checkServerStatus(false);
       });
     });
+  }
+
+  /**
+   * 打开应用且核心可用时按设置自动拉起服务，只自动执行一次，避免手动停止后又被拉起
+   */
+  private void autoStartServerIfNeeded() {
+    if (autoStartTriggered || isServerRunning || !isAdded()) {
+      return;
+    }
+    if (!ConfigManager.getInstance(requireContext()).isAutoStartServerEnabled()) {
+      return;
+    }
+    autoStartTriggered = true;
+    toggleServerStatus();
   }
 
 
@@ -226,7 +218,9 @@ public class ServerStatusFragment extends Fragment {
     tvCpuArchitecture.setText(cpuArch);
     TextView tvRootStatus = view.findViewById(R.id.tv_root_status);
     TextView tvSelinux = view.findViewById(R.id.tv_selinux_status);
-    tvSelinux.setText(SELinuxManager.checkByRestrictedDirectories() ? "Enforcing" : "Permissive");
+    boolean enforcing = SELinuxManager.checkByRestrictedDirectories();
+    tvSelinux.setText(enforcing ? getString(R.string.selinux_enforcing) : getString(R.string.selinux_permissive));
+    tvSelinux.setTextColor(MaterialColors.getColor(tvSelinux, enforcing ? R.attr.colorSuccess : R.attr.colorWarning));
     // 显示引擎版本（假设从本地配置获取）
 //    String engineVersion = getEngineVersion();
 //    tvEngineVersion.setText(engineVersion);
@@ -235,9 +229,8 @@ public class ServerStatusFragment extends Fragment {
       boolean isRooted = serverManager.isDeviceRooted();
       requireActivity().runOnUiThread(() -> {
         tvRootStatus.setText(isRooted ? getString(R.string.root_obtained) : getString(R.string.root_not_obtained));
-        tvRootStatus.setTextColor(isRooted ?
-            getResources().getColor(R.color.green) :
-            getResources().getColor(R.color.red));
+        tvRootStatus.setTextColor(MaterialColors.getColor(tvRootStatus,
+            isRooted ? R.attr.colorSuccess : androidx.appcompat.R.attr.colorError));
       });
     });
   }

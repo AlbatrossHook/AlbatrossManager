@@ -6,16 +6,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/background_light">
+    android:background="?attr/colorSurface">
 
     <!-- 控制面板 -->
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:elevation="4dp"
         app:cardCornerRadius="12dp"
-        app:cardBackgroundColor="@color/surface_color">
+        app:cardBackgroundColor="?attr/colorSurface">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,7 +30,7 @@
                 android:text="@string/log_monitoring"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="@color/text_primary" />
+                android:textColor="?attr/colorOnSurface" />
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switch_monitor"
@@ -50,22 +50,21 @@
                 android:layout_height="40dp"
                 android:text="@string/clear_log"
                 android:textSize="14sp"
-                android:backgroundTint="@color/orange"
-                android:textColor="@android:color/white"
+                android:backgroundTint="?attr/colorWarning"
+                android:textColor="?attr/colorOnPrimary"
                 android:elevation="2dp" />
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
     <!-- 日志输出区域 -->
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="12dp"
         android:elevation="2dp"
-        app:cardCornerRadius="8dp"
-        app:cardBackgroundColor="@color/surface_color">
+        app:cardBackgroundColor="?attr/colorSurface">
 
         <ScrollView
             android:id="@+id/scroll_view"
@@ -81,11 +80,11 @@
                 android:padding="16dp"
                 android:text="@string/log_output_placeholder"
                 android:textSize="12sp"
-                android:typeface="monospace"
-                android:textColor="@color/text_primary"
+                android:fontFamily="monospace"
+                android:textColor="?attr/colorOnSurface"
                 android:lineSpacingMultiplier="1.2" />
         </ScrollView>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
     <ProgressBar
         android:id="@+id/progress_bar"

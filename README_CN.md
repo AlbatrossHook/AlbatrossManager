@@ -90,6 +90,37 @@ adb install -r app/build/outputs/apk/debug/app-debug.apk
 
 插件开发参考实现：`https://github.com/AlbatrossHook/HideApp`。
 
+## 脚本自动化（adb 广播）
+
+`ManagerCommandReceiver` 把界面上的操作暴露成广播，供脚本调用。该 receiver 是 exported 的，但要求调用方持有 `android.permission.DUMP`，因此只有 adb shell/root 能触发。包名用 release 版 `qing.albatross.manager`（debug 版为 `qing.albatross.manager.debug`）。
+
+```bash
+# 核心包生命周期
+adb shell am broadcast -a qing.albatross.manager.action.INSTALL_CORE -p qing.albatross.manager --es path /data/local/tmp/core.zip
+adb shell am broadcast -a qing.albatross.manager.action.LOAD_CORE -p qing.albatross.manager
+adb shell am broadcast -a qing.albatross.manager.action.START_SERVER -p qing.albatross.manager
+
+# 运行选项：jit / anti_detection / memfd_inject / auto_start
+adb shell am broadcast -a qing.albatross.manager.action.SET_OPTION -p qing.albatross.manager --es key anti_detection --ez value true
+
+# 插件规则与注入
+adb shell am broadcast -a qing.albatross.manager.action.INSTALL_PLUGIN -p qing.albatross.manager --es package com.example.plugin --es targets com.example.app
+adb shell am broadcast -a qing.albatross.manager.action.INJECT -p qing.albatross.manager --es target com.example.app
+
+# 状态快照
+adb shell am broadcast -a qing.albatross.manager.action.STATUS -p qing.albatross.manager
+```
+
+命令异步执行，结果输出到 logcat（tag：`AlbManagerAction`）：
+
+```bash
+adb logcat -s AlbManagerAction:I
+# MANAGER_ACTION success: action=STATUS, serverRunning=false, ...
+# MANAGER_ACTION failed: action=..., error=...
+```
+
+其余动作：`STOP_SERVER`、`SELECT_CORE` / `DELETE_CORE`、`SET_ROOT_PATH`、`SET_SERVER_ADDRESS`、`SET_SU_PATH`、`KERNEL_HIDE`、`SET_PLUGIN_ENABLED` / `DELETE_PLUGIN` / `SET_PLUGIN_PARAMS` / `SYNC_PLUGINS`、`SET_RULE`、`OPEN_APP` / `FORCE_STOP_APP` / `FREEZE_APP` / `UNFREEZE_APP`、`APP_INFO`；各动作接收的 extras 见 `ManagerCommandReceiver`。
+
 ## 常见问题
 
 - 未发现插件：确认插件已安装且正确声明了MetaData。

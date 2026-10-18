@@ -32,14 +32,18 @@ import qing.albatross.manager.data.Plugin;
 import qing.albatross.manager.data.PluginDatabaseHelper;
 import qing.albatross.manager.data.PluginRuleDatabaseHelper;
 import qing.albatross.manager.data.ServerDatabaseHelper;
+import qing.albatross.manager.utils.RuntimeOptions;
 import qing.albatross.plugin.PluginConnection;
 
 public final class PluginDelegate {
 
+  private static final String TAG = "PluginDelegate";
   public static final byte DEX_LOAD_SUCCESS = 20;
   PluginConnection connection;
   boolean isLsposedInjected;
   static PluginDelegate instance;
+  //当前服务包的 app_agent.dex 是否支持运行选项（JIT/对抗/内存注入）
+  static boolean agentDexSupportOptions = true;
 
   public static boolean isServerRunning() {
     if (instance != null) {
@@ -60,6 +64,75 @@ public final class PluginDelegate {
 
   public static PluginDelegate get() {
     return instance;
+  }
+
+  /**
+   * 把运行选项下发给 app_agent.dex，只影响之后创建的连接与之后发起的注入。
+   * 旧服务包的 dex 没有对应接口，此时只置位提示标志，不影响其它功能。
+   */
+  private static void applyRuntimeOptions(Context context) {
+    try {
+      int initFlags = RuntimeOptions.initFlags(context);
+      int injectFlags = RuntimeOptions.injectFlags(context);
+      boolean changed = initFlags != PluginConnection.getInitFlags() ||
+          injectFlags != PluginConnection.getInjectFlags();
+      PluginConnection.setInitFlags(initFlags);
+      PluginConnection.setInjectFlags(injectFlags);
+      agentDexSupportOptions = true;
+      if (changed) {
+        Log.i(TAG, "下发运行选项 initFlags=0x" + Integer.toHexString(initFlags) +
+            ", injectFlags=0x" + Integer.toHexString(injectFlags));
+      }
+    } catch (Throwable e) {
+      agentDexSupportOptions = false;
+      Log.e(TAG, "当前服务包的 app_agent.dex 不支持运行选项:" + e);
+    }
+  }
+
+  /**
+   * 运行选项改变后重新下发：已连接时重连，让服务端拿到新的 flags
+   */
+  public static boolean reApplyRuntimeOptions(ServerDatabaseHelper dbHelper, Context context) {
+    if (!isServerRunning()) {
+      return false;
+    }
+    try {
+      // 尽量复用现有连接：重连会新建会话，连续切换选项时容易把连接搞掉
+      instance.connection.pushFlags();
+      return true;
+    } catch (Throwable e) {
+      Log.e(TAG, "在原连接上重下发选项失败，改为重连: " + e);
+      disconnection();
+      return checkIsRunning(dbHelper, context);
+    }
+  }
+
+  /**
+   * 服务相关操作前调用：没连上就重新建立连接（服务重启后无需手动刷新）
+   */
+  public static boolean ensureConnected(ServerDatabaseHelper dbHelper, Context context) {
+    if (isServerRunning()) {
+      return true;
+    }
+    return checkIsRunning(dbHelper, context);
+  }
+
+  public static boolean isAgentDexSupportOptions() {
+    return agentDexSupportOptions;
+  }
+
+  /**
+   * 内核隐藏（rwbp）：需要设备已加载 rwbp.ko，开启后不可撤销
+   */
+  public static boolean extendKpmHide() {
+    if (!isServerRunning())
+      return false;
+    try {
+      return instance.connection.supportExtendKpm();
+    } catch (Throwable e) {
+      Log.e(TAG, "extend kpm hide fail", e);
+      return false;
+    }
   }
 
   public static boolean sync(ServerDatabaseHelper dbHelper, Context context) {
@@ -123,6 +196,7 @@ public final class PluginDelegate {
 
       }
       String SERVER_ADDRESS = ConfigManager.getInstance(context).getServerAddress();
+      applyRuntimeOptions(context);
       PluginConnection connection = PluginConnection.create(SERVER_ADDRESS, lib32, appAgentPath, rootPath + ConfigManager.SYSTEM_AGENT_FILE);
       if (connection != null) {
         instance = new PluginDelegate();
@@ -263,7 +337,11 @@ public final class PluginDelegate {
         return false;
       }
       byte res = connection.addPluginRule(pluginId, targetPkg);
-      return res == 0;
+      if (res != 0) {
+        Albatross.log("add plugin for " + targetPkg + " fail:" + res);
+        return false;
+      }
+      return true;
     } catch (Throwable e) {
       e.printStackTrace();
       return false;
@@ -324,6 +402,19 @@ public final class PluginDelegate {
     }
 
     return false;
+  }
+
+  /**
+   * 通过服务端(root)执行 shell 命令
+   */
+  public String shell(String command) {
+    try {
+      ShellExecResult result = connection.shell(command);
+      return result == null ? null : result.stdout;
+    } catch (DisconnectException e) {
+      disconnection();
+      return null;
+    }
   }
 
   public boolean forceStopApp(String packageName) {

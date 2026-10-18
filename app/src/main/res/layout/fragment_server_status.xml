@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="?android:attr/colorBackground"
     android:fillViewport="true">
 
     <LinearLayout
@@ -13,27 +13,26 @@
         android:padding="16dp">
 
         <!-- Core Module Status -->
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/core_version"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            style="@style/CardViewStyle"
-            app:cardElevation="4dp">
+            android:layout_marginBottom="12dp"
+            style="@style/CardViewStyle">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="20dp">
+                android:padding="16dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/core_module"
-                    style="@style/TextTitle"
-                    android:textColor="@color/text_primary"
-                    android:layout_marginBottom="16dp" />
+                    style="@style/TextSection"
+                    android:textColor="?attr/colorOnSurface"
+                    android:layout_marginBottom="12dp" />
 
                 <!-- Status row -->
                 <LinearLayout
@@ -44,20 +43,21 @@
                     android:layout_marginBottom="12dp">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:text="@string/core_support_check"
                         style="@style/TextBody"
-                        android:textColor="@color/text_secondary" />
+                        android:textColor="?attr/colorOnSurfaceVariant" />
 
                     <TextView
                         android:id="@+id/tv_server_status"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:gravity="end"
                         android:layout_height="wrap_content"
                         android:text="@string/checking"
                         style="@style/TextBody"
-                        android:textColor="@color/primary"
+                        android:textColor="?attr/colorPrimary"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -70,20 +70,21 @@
                     android:layout_marginBottom="12dp">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:text="@string/core_features"
                         style="@style/TextBody"
-                        android:textColor="@color/text_secondary" />
+                        android:textColor="?attr/colorOnSurfaceVariant" />
 
                     <TextView
                         android:id="@+id/tv_engine_support"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:gravity="end"
                         android:layout_height="wrap_content"
                         android:text="@string/loading"
                         style="@style/TextBody"
-                        android:textColor="@color/text_primary" />
+                        android:textColor="?attr/colorOnSurface" />
                 </LinearLayout>
 
                 <!-- Version row -->
@@ -92,23 +93,24 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:layout_marginBottom="16dp">
+                    android:layout_marginBottom="12dp">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:text="@string/core_current_version"
                         style="@style/TextBody"
-                        android:textColor="@color/text_secondary" />
+                        android:textColor="?attr/colorOnSurfaceVariant" />
 
                     <TextView
                         android:id="@+id/tv_engine_version"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:gravity="end"
                         android:layout_height="wrap_content"
                         android:text="@string/loading"
                         style="@style/TextBody"
-                        android:textColor="@color/text_primary" />
+                        android:textColor="?attr/colorOnSurface" />
                 </LinearLayout>
 
                 <!-- Check Core Availability Button -->
@@ -122,29 +124,28 @@
                     app:iconGravity="textStart" />
 
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
         <!-- Server Status -->
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/server_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            style="@style/CardViewStyle"
-            app:cardElevation="4dp">
+            android:layout_marginBottom="12dp"
+            style="@style/CardViewStyle">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="20dp">
+                android:padding="16dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/server_status"
-                    style="@style/TextTitle"
-                    android:textColor="@color/text_primary"
+                    style="@style/TextSection"
+                    android:textColor="?attr/colorOnSurface"
                     android:layout_marginBottom="12dp" />
 
                 <TextView
@@ -153,8 +154,35 @@
                     android:layout_height="wrap_content"
                     android:text="@string/checking"
                     style="@style/TextBody"
-                    android:textColor="@color/text_secondary"
-                    android:layout_marginBottom="16dp" />
+                    android:textColor="?attr/colorOnSurfaceVariant"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/tv_server_cost"
+                    style="@style/TextCaption"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:textColor="?attr/colorOnSurfaceVariant"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tv_runtime_options"
+                    style="@style/TextCaption"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:textColor="?attr/colorOnSurfaceVariant" />
+
+                <ProgressBar
+                    android:id="@+id/server_progress"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:indeterminateTint="?attr/colorPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:indeterminate="true"
+                    android:visibility="gone" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/toggle_server_button"
@@ -166,29 +194,28 @@
                     app:iconGravity="textStart" />
 
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
         <!-- Device Information -->
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/device_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/CardViewStyle"
-            app:cardElevation="4dp">
+            style="@style/CardViewStyle">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="20dp">
+                android:padding="16dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/device_info"
-                    style="@style/TextTitle"
-                    android:textColor="@color/text_primary"
-                    android:layout_marginBottom="16dp" />
+                    style="@style/TextSection"
+                    android:textColor="?attr/colorOnSurface"
+                    android:layout_marginBottom="12dp" />
 
                 <!-- CPU Architecture -->
                 <LinearLayout
@@ -199,20 +226,21 @@
                     android:layout_marginBottom="12dp">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:text="@string/cpu_architecture"
                         style="@style/TextBody"
-                        android:textColor="@color/text_secondary" />
+                        android:textColor="?attr/colorOnSurfaceVariant" />
 
                     <TextView
                         android:id="@+id/tv_cpu_architecture"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:gravity="end"
                         android:layout_height="wrap_content"
                         android:text="@string/loading"
                         style="@style/TextBody"
-                        android:textColor="@color/text_primary" />
+                        android:textColor="?attr/colorOnSurface" />
                 </LinearLayout>
 
                 <!-- Root Status -->
@@ -224,20 +252,21 @@
                     android:layout_marginBottom="12dp">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:text="@string/root_status"
                         style="@style/TextBody"
-                        android:textColor="@color/text_secondary" />
+                        android:textColor="?attr/colorOnSurfaceVariant" />
 
                     <TextView
                         android:id="@+id/tv_root_status"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:gravity="end"
                         android:layout_height="wrap_content"
                         android:text="@string/checking_ellipsis"
                         style="@style/TextBody"
-                        android:textColor="@color/text_primary" />
+                        android:textColor="?attr/colorOnSurface" />
                 </LinearLayout>
 
                 <!-- Selinux Status -->
@@ -249,20 +278,21 @@
                     android:layout_marginBottom="12dp">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:text="@string/selinux_status"
                         style="@style/TextBody"
-                        android:textColor="@color/text_secondary" />
+                        android:textColor="?attr/colorOnSurfaceVariant" />
 
                     <TextView
                         android:id="@+id/tv_selinux_status"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:gravity="end"
                         android:layout_height="wrap_content"
                         android:text="@string/checking_ellipsis"
                         style="@style/TextBody"
-                        android:textColor="@color/text_primary" />
+                        android:textColor="?attr/colorOnSurface" />
                 </LinearLayout>
 
                 <!-- Android Version -->
@@ -274,20 +304,21 @@
                     android:layout_marginBottom="12dp">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:text="@string/android_version"
                         style="@style/TextBody"
-                        android:textColor="@color/text_secondary" />
+                        android:textColor="?attr/colorOnSurfaceVariant" />
 
                     <TextView
                         android:id="@+id/tv_android_version"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:gravity="end"
                         android:layout_height="wrap_content"
                         android:text="@string/loading"
                         style="@style/TextBody"
-                        android:textColor="@color/text_primary" />
+                        android:textColor="?attr/colorOnSurface" />
                 </LinearLayout>
 
                 <!-- Device Model -->
@@ -298,24 +329,25 @@
                     android:gravity="center_vertical">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:text="@string/phone_model"
                         style="@style/TextBody"
-                        android:textColor="@color/text_secondary" />
+                        android:textColor="?attr/colorOnSurfaceVariant" />
 
                     <TextView
                         android:id="@+id/tv_device_model"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:gravity="end"
                         android:layout_height="wrap_content"
                         android:text="@string/loading"
                         style="@style/TextBody"
-                        android:textColor="@color/text_primary" />
+                        android:textColor="?attr/colorOnSurface" />
                 </LinearLayout>
 
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 </ScrollView>

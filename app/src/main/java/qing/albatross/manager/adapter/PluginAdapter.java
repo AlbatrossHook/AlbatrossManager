@@ -18,7 +18,7 @@ package qing.albatross.manager.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Switch;
+import androidx.appcompat.widget.SwitchCompat;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -94,7 +94,7 @@ public class PluginAdapter extends RecyclerView.Adapter<PluginAdapter.PluginView
     TextView tvName;
     TextView tvPackage;
     TextView tvDescription;
-    Switch swEnabled;
+    SwitchCompat swEnabled;
     TextView btnDelete;
 
     PluginViewHolder(View itemView) {

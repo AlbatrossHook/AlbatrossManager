@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/background"
+    android:background="?android:attr/colorBackground"
     android:padding="16dp">
 
     <ScrollView
@@ -15,29 +15,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:spacing="16dp">
+            android:orientation="vertical">
 
             <!-- 插件基本信息 -->
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/CardViewStyle"
-                app:cardElevation="4dp">
+                style="@style/CardViewStyle">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="20dp">
+                    android:padding="16dp">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/plugin_info"
-                        style="@style/TextTitle"
-                        android:textColor="@color/text_primary"
-                        android:layout_marginBottom="16dp"/>
+                        style="@style/TextSection"
+                        android:textColor="?attr/colorOnSurface"
+                        android:layout_marginBottom="12dp"/>
 
                     <!-- 插件图标和基本信息 -->
                     <LinearLayout
@@ -45,15 +43,15 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:gravity="center_vertical"
-                        android:layout_marginBottom="16dp">
+                        android:layout_marginBottom="12dp">
 
                         <ImageView
                             android:id="@+id/iv_plugin_icon"
                             android:layout_width="64dp"
                             android:layout_height="64dp"
-                            android:src="@drawable/ic_launcher_foreground"
+                            android:src="@drawable/ic_app_placeholder"
                             android:scaleType="centerCrop"
-                            android:background="@drawable/ic_launcher_background"
+                            android:background="@drawable/ic_app_placeholder"
                             android:layout_marginEnd="16dp"/>
 
                         <LinearLayout
@@ -68,7 +66,7 @@
                                 android:layout_height="wrap_content"
                                 android:textSize="18sp"
                                 android:textStyle="bold"
-                                android:textColor="@color/text_primary"
+                                android:textColor="?attr/colorOnSurface"
                                 android:layout_marginBottom="4dp"/>
 
                             <TextView
@@ -76,16 +74,16 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textSize="14sp"
-                                android:textColor="@color/text_secondary"
+                                android:textColor="?attr/colorOnSurfaceVariant"
                                 android:fontFamily="monospace"/>
                         </LinearLayout>
 
-                        <Switch
+                        <androidx.appcompat.widget.SwitchCompat
                             android:id="@+id/switch_plugin_enabled"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:thumbTint="@color/primary"
-                            android:trackTint="@color/surface_variant" />
+                            app:thumbTint="?attr/colorPrimary"
+                            app:trackTint="?attr/colorSurfaceVariant" />
                     </LinearLayout>
 
                     <!-- 应用卸载警告 -->
@@ -94,7 +92,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:background="@color/red_light"
+                        android:background="?attr/colorErrorContainer"
                         android:padding="12dp"
                         android:visibility="gone"
                         android:layout_marginBottom="8dp">
@@ -105,7 +103,7 @@
                             android:src="@drawable/ic_clear"
                             android:layout_marginEnd="8dp"
                             android:layout_gravity="center_vertical"
-                            app:tint="@color/red_dark"/>
+                            app:tint="?attr/colorError"/>
 
                         <TextView
                             android:id="@+id/tv_uninstall_warning"
@@ -113,7 +111,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/plugin_app_uninstalled"
-                            android:textColor="@color/red_dark"
+                            android:textColor="?attr/colorError"
                             android:textSize="14sp"
                             android:layout_gravity="center_vertical"/>
                     </LinearLayout>
@@ -123,7 +121,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="14sp"
-                        android:textColor="@color/text_secondary"
+                        android:textColor="?attr/colorOnSurfaceVariant"
                         android:layout_marginBottom="4dp"/>
 
                     <TextView
@@ -131,7 +129,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="14sp"
-                        android:textColor="@color/text_secondary"
+                        android:textColor="?attr/colorOnSurfaceVariant"
                         android:fontFamily="monospace"
                         android:layout_marginBottom="8dp"/>
 
@@ -140,7 +138,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="14sp"
-                        android:textColor="@color/text_secondary"
+                        android:textColor="?attr/colorOnSurfaceVariant"
                         android:fontFamily="monospace"
                         android:layout_marginBottom="8dp"/>
 
@@ -148,27 +146,26 @@
                         android:id="@+id/tv_plugin_description"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/text_secondary"
+                        android:textColor="?attr/colorOnSurfaceVariant"
                         android:textSize="14sp"
-                        android:background="@color/gray_light"
+                        android:background="?attr/colorSurfaceContainerHigh"
                         android:padding="12dp"
                         android:lineSpacingMultiplier="1.2"/>
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
             <!-- 配置参数 -->
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:elevation="2dp"
-                app:cardCornerRadius="8dp"
-                app:cardBackgroundColor="@color/surface_color">
+                app:cardBackgroundColor="?attr/colorSurface">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="20dp">
+                    android:padding="16dp">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -176,15 +173,15 @@
                         android:text="@string/config_params"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:textColor="@color/text_primary"
-                        android:layout_marginBottom="16dp"/>
+                        android:textColor="?attr/colorOnSurface"
+                        android:layout_marginBottom="12dp"/>
 
                     <!-- 参数1 -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_marginBottom="16dp">
+                        android:layout_marginBottom="12dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -199,7 +196,7 @@
                                 android:layout_weight="1"
                                 android:text="@string/param1_string"
                                 android:textSize="14sp"
-                                android:textColor="@color/text_primary"/>
+                                android:textColor="?attr/colorOnSurface"/>
 
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/btn_copy_param1"
@@ -208,7 +205,7 @@
                                 android:layout_height="32dp"
                                 android:text="@string/copy_button"
                                 android:textSize="12sp"
-                                android:textColor="@color/primary"
+                                android:textColor="?attr/colorPrimary"
                                 app:icon="@drawable/ic_copy"
                                 app:iconSize="16dp"
                                 app:iconGravity="textStart" />
@@ -242,7 +239,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/param2_number"
                             android:textSize="14sp"
-                            android:textColor="@color/text_primary"
+                            android:textColor="?attr/colorOnSurface"
                             android:layout_marginBottom="8dp"/>
 
                         <EditText
@@ -265,7 +262,7 @@
                         app:icon="@drawable/ic_settings"
                         app:iconGravity="textStart" />
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
     </ScrollView>
     <com.google.android.material.button.MaterialButton
@@ -274,7 +271,7 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:text="@string/config_in_plugin"
-        android:backgroundTint="@color/success"
+        android:backgroundTint="?attr/colorSuccess"
         android:layout_marginTop="8dp"
         app:icon="@drawable/ic_plugins"
         app:iconGravity="textStart" />

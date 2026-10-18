@@ -93,6 +93,36 @@ It also declares a package query for the action `qing.albatross.PluginConfig` to
 
 For plugin development and reference implementation, see: `https://github.com/AlbatrossHook/HideApp`.
 
+## Automating the manager (adb broadcast)
+
+`ManagerCommandReceiver` exposes the UI operations as broadcasts for scripts. It is exported but protected by `android.permission.DUMP`, so only adb shell/root can call it. Use the release package name `qing.albatross.manager` (debug builds: `qing.albatross.manager.debug`).
+
+```bash
+# Core package lifecycle
+adb shell am broadcast -a qing.albatross.manager.action.INSTALL_CORE -p qing.albatross.manager --es path /data/local/tmp/core.zip
+adb shell am broadcast -a qing.albatross.manager.action.LOAD_CORE -p qing.albatross.manager
+adb shell am broadcast -a qing.albatross.manager.action.START_SERVER -p qing.albatross.manager
+
+# Runtime options: jit / anti_detection / memfd_inject / auto_start
+adb shell am broadcast -a qing.albatross.manager.action.SET_OPTION -p qing.albatross.manager --es key anti_detection --ez value true
+
+# Plugin rules and injection
+adb shell am broadcast -a qing.albatross.manager.action.INSTALL_PLUGIN -p qing.albatross.manager --es package com.example.plugin --es targets com.example.app
+adb shell am broadcast -a qing.albatross.manager.action.INJECT -p qing.albatross.manager --es target com.example.app
+
+# Status snapshot
+adb shell am broadcast -a qing.albatross.manager.action.STATUS -p qing.albatross.manager
+```
+
+Commands run asynchronously; results are written to logcat under the tag `AlbManagerAction`:
+
+```bash
+adb logcat -s AlbManagerAction:I
+# MANAGER_ACTION success: action=STATUS, serverRunning=false, ...
+# MANAGER_ACTION failed: action=..., error=...
+```
+
+Other actions: `STOP_SERVER`, `SELECT_CORE` / `DELETE_CORE`, `SET_ROOT_PATH`, `SET_SERVER_ADDRESS`, `SET_SU_PATH`, `KERNEL_HIDE`, `SET_PLUGIN_ENABLED` / `DELETE_PLUGIN` / `SET_PLUGIN_PARAMS` / `SYNC_PLUGINS`, `SET_RULE`, `OPEN_APP` / `FORCE_STOP_APP` / `FREEZE_APP` / `UNFREEZE_APP`, `APP_INFO`. See `ManagerCommandReceiver` for the extras each action accepts.
 
 ## Troubleshooting
 

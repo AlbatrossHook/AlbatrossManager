@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:textColor="@color/blue"
+        android:textColor="?attr/colorInfo"
         android:textSize="16sp"
         android:textStyle="bold" />
 
@@ -23,8 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:lineSpacingExtra="4dp"
-        android:textColor="@android:color/darker_gray"
+        android:textColor="?attr/colorOnSurfaceVariant"
         android:textSize="14sp"
-        android:typeface="monospace" />
+        android:fontFamily="monospace" />
 
 </LinearLayout>

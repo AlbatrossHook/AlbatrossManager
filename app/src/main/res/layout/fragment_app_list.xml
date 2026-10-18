@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:background="?android:attr/colorBackground">
 
     <!-- Main content area -->
     <FrameLayout
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:visibility="gone"
-            android:indeterminateTint="@color/primary" />
+            android:indeterminateTint="?attr/colorPrimary" />
 
         <!-- Empty state -->
         <LinearLayout
@@ -49,14 +49,14 @@
                 android:src="@drawable/ic_applications"
                 android:alpha="0.6"
                 android:layout_marginBottom="24dp"
-                app:tint="@color/text_hint" />
+                app:tint="?attr/colorOutline" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/no_apps_found"
                 style="@style/TextBody"
-                android:textColor="@color/text_secondary"
+                android:textColor="?attr/colorOnSurfaceVariant"
                 android:gravity="center" />
 
         </LinearLayout>

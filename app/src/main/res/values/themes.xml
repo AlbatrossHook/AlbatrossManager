@@ -1,100 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Theme.Albatross" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
+
+    <!--
+      基础主题：与明暗无关的项（颜色角色走 values-night/colors.xml，形状是共用的）。
+      Theme.Albatross 只在两套 values 里各自覆盖状态栏图标明暗，避免整份主题重复。
+    -->
+    <style name="Base.Theme.Albatross" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- M3 颜色角色 -->
         <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryVariant">@color/primary_dark</item>
         <item name="colorOnPrimary">@color/on_primary</item>
-        
-        <!-- Secondary brand color. -->
+        <item name="colorPrimaryContainer">@color/primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/on_primary_container</item>
         <item name="colorSecondary">@color/secondary</item>
-        <item name="colorSecondaryVariant">@color/secondary</item>
         <item name="colorOnSecondary">@color/on_secondary</item>
-        
-        <!-- Error color. -->
+        <item name="colorSecondaryContainer">@color/secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/on_secondary_container</item>
+        <item name="colorTertiary">@color/tertiary</item>
+        <item name="colorOnTertiary">@color/on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/on_tertiary_container</item>
         <item name="colorError">@color/error</item>
         <item name="colorOnError">@color/on_error</item>
-        
-        <!-- Background colors. -->
+        <item name="colorErrorContainer">@color/error_container</item>
+        <item name="colorOnErrorContainer">@color/on_error_container</item>
         <item name="android:colorBackground">@color/background</item>
+        <item name="colorOnBackground">@color/on_background</item>
         <item name="colorSurface">@color/surface</item>
         <item name="colorOnSurface">@color/on_surface</item>
-        
-        <!-- Status bar color. -->
+        <item name="colorSurfaceVariant">@color/surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/on_surface_variant</item>
+        <item name="colorOutline">@color/outline</item>
+        <item name="colorOutlineVariant">@color/outline_variant</item>
+        <item name="colorSurfaceContainerLowest">@color/surface_container_lowest</item>
+        <item name="colorSurfaceContainerLow">@color/surface_container_low</item>
+        <item name="colorSurfaceContainer">@color/surface_container</item>
+        <item name="colorSurfaceContainerHigh">@color/surface_container_high</item>
+        <item name="colorSurfaceContainerHighest">@color/surface_container_highest</item>
+        <!-- 项目补充的语义色（attrs.xml 里声明） -->
+        <item name="colorSuccess">@color/success</item>
+        <item name="colorOnSuccess">@color/on_success</item>
+        <item name="colorSuccessContainer">@color/success_container</item>
+        <item name="colorOnSuccessContainer">@color/on_success_container</item>
+        <item name="colorWarning">@color/warning</item>
+        <item name="colorOnWarning">@color/on_warning</item>
+        <item name="colorWarningContainer">@color/warning_container</item>
+        <item name="colorOnWarningContainer">@color/on_warning_container</item>
+        <item name="colorInfo">@color/info</item>
+        <item name="colorOnInfo">@color/on_info</item>
+        <item name="colorInfoContainer">@color/info_container</item>
+        <item name="colorOnInfoContainer">@color/on_info_container</item>
+        <!-- 形状 token：圆角只在这里定义，布局引用形状 token -->
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Albatross.Small</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Albatross.Medium</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Albatross.Large</item>
+        <!-- 状态栏/导航栏：透明 + 内容自己处理 inset -->
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowLightStatusBar">true</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="android:windowLightNavigationBar">false</item>
-        
-        <!-- Action bar. -->
-        <item name="windowActionBarOverlay">false</item>
-        <item name="android:textAllCaps">false</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:enforceStatusBarContrast" tools:targetApi="q">false</item>
+        <item name="android:enforceNavigationBarContrast" tools:targetApi="q">false</item>
     </style>
 
-    <!-- TabLayout 自定义样式 -->
-    <style name="CustomTabLayout" parent="Widget.Design.TabLayout">
-        <item name="tabTextColor">@color/tab_unselected</item>
-        <item name="tabSelectedTextColor">@color/tab_selected</item>
-        <item name="tabIndicatorColor">@color/tab_indicator</item>
-        <item name="tabBackground">?attr/selectableItemBackground</item>
-        <item name="android:background">@color/surface</item>
-        <item name="android:elevation">4dp</item>
+    <style name="Theme.Albatross" parent="Base.Theme.Albatross">
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
     </style>
-    
-    <!-- CardView 样式 -->
-    <style name="CardViewStyle" parent="Widget.MaterialComponents.CardView">
-        <item name="cardBackgroundColor">@color/card_background</item>
-        <item name="cardElevation">4dp</item>
+
+    <style name="ShapeAppearance.Albatross.Small" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+
+    <style name="ShapeAppearance.Albatross.Medium" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+
+    <style name="ShapeAppearance.Albatross.Large" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
+    <!-- 底部 Tab：M3 底栏观感（容器色 + 无阴影），指示条不整宽 -->
+    <style name="CustomTabLayout" parent="Widget.Material3.TabLayout">
+        <item name="tabIndicatorColor">?attr/colorPrimary</item>
+        <item name="tabSelectedTextColor">?attr/colorPrimary</item>
+        <item name="tabTextColor">?attr/colorOnSurfaceVariant</item>
+        <item name="tabRippleColor">@color/ripple</item>
+        <item name="tabIconTint">@color/tab_icon_selector</item>
+        <item name="tabIndicatorFullWidth">false</item>
+        <item name="android:background">?attr/colorSurfaceContainer</item>
+        <item name="android:elevation">0dp</item>
+    </style>
+
+    <!--
+      卡片：描边卡片（outlined）。注意不在 style 里写 layout_margin —— 之前写死 8dp
+      导致"用了 style 的卡片"和"没用的卡片"左右错位。
+    -->
+    <style name="CardViewStyle" parent="Widget.Material3.CardView.Outlined">
+        <item name="cardBackgroundColor">?attr/colorSurface</item>
+        <item name="strokeColor">?attr/colorOutlineVariant</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="cardElevation">0dp</item>
         <item name="cardCornerRadius">12dp</item>
-        <item name="android:layout_margin">8dp</item>
     </style>
-    
-    <!-- Button 样式 -->
-    <style name="ButtonPrimary" parent="Widget.MaterialComponents.Button">
-        <item name="backgroundTint">@color/primary</item>
-        <item name="android:textColor">@color/on_primary</item>
+
+    <!-- 列表容器卡片：不描边、随底层表面，用于包住整段列表 -->
+    <style name="ListCardStyle" parent="Widget.Material3.CardView.Filled">
+        <item name="cardBackgroundColor">?attr/colorSurfaceContainerLow</item>
+        <item name="cardElevation">0dp</item>
+        <item name="cardCornerRadius">12dp</item>
+    </style>
+
+    <!-- 按钮：统一 40dp 高、水平 20dp 内边距；Compact/TextLink 是列表行内的例外 -->
+    <style name="ButtonPrimary" parent="Widget.Material3.Button">
+        <item name="backgroundTint">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
         <item name="android:textAllCaps">false</item>
+        <item name="android:minHeight">40dp</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+    </style>
+
+    <style name="ButtonSecondary" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="strokeColor">?attr/colorOutline</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:minHeight">40dp</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+    </style>
+
+    <style name="ButtonCompact" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="strokeColor">?attr/colorOutline</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">32dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">12dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+    </style>
+
+    <style name="ButtonCompactDanger" parent="ButtonCompact">
+        <item name="strokeColor">?attr/colorError</item>
+        <item name="android:textColor">?attr/colorError</item>
+    </style>
+
+    <style name="ButtonTextLink" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">32dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
         <item name="android:paddingStart">8dp</item>
         <item name="android:paddingEnd">8dp</item>
-        <item name="android:paddingTop">2dp</item>
-        <item name="android:paddingBottom">2dp</item>
     </style>
-    
-    <style name="ButtonSecondary" parent="Widget.MaterialComponents.Button.OutlinedButton">
-        <item name="strokeColor">@color/outline</item>
-        <item name="android:textColor">@color/button_text_secondary</item>
-        <item name="android:textAllCaps">false</item>
-        <item name="android:paddingStart">8dp</item>
-        <item name="android:paddingEnd">8dp</item>
-        <item name="android:paddingTop">2dp</item>
-        <item name="android:paddingBottom">2dp</item>
-    </style>
-    
-    <!-- Text 样式 -->
-    <style name="TextHeadline" parent="Widget.MaterialComponents.TextView">
-        <item name="android:textColor">@color/text_primary</item>
-        <item name="android:textSize">24sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-    
+
+    <!-- 文字阶：页/卡标题 20sp，卡片小标题 16sp，正文 14sp，说明 12sp，正文都带行高 -->
     <style name="TextTitle" parent="Widget.MaterialComponents.TextView">
-        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
     </style>
-    
-    <style name="TextBody" parent="Widget.MaterialComponents.TextView">
-        <item name="android:textColor">@color/text_primary</item>
+
+    <style name="TextSection" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textColor">?attr/colorOnSurface</item>
         <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
-    
-    <style name="TextCaption" parent="Widget.MaterialComponents.TextView">
-        <item name="android:textColor">@color/text_secondary</item>
+
+    <style name="TextBody" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textColor">?attr/colorOnSurface</item>
         <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">2dp</item>
     </style>
-    
-    <style name="TextLabel" parent="Widget.MaterialComponents.TextView">
-        <item name="android:textColor">@color/text_secondary</item>
+
+    <style name="TextCaption" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
         <item name="android:textSize">12sp</item>
+        <item name="android:lineSpacingExtra">2dp</item>
     </style>
+
+    <style name="TextLabel" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- 设置页开关行：标题 + 说明 -->
+    <style name="SettingSwitchTitle" parent="TextSection" />
+
+    <style name="SettingSwitchDesc" parent="TextCaption" />
 </resources>

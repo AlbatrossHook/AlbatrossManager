@@ -5,10 +5,9 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:gravity="center_vertical"
-    android:padding="16dp"
-    android:paddingTop="4dp"
-    android:background="@color/surface"
-    android:elevation="4dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="8dp"
+    android:background="?attr/colorSurfaceContainer"
     android:minHeight="56dp"
     android:fitsSystemWindows="true">
 
@@ -19,7 +18,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         style="@style/TextTitle"
-        android:textColor="@color/text_primary"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:text="@string/albatross_manager_title" />
 
     <!-- App count (for app list) -->
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:text="@string/app_count_format_default"
         style="@style/TextCaption"
-        android:textColor="@color/text_secondary"
+        android:textColor="?attr/colorOnSecondaryContainer"
         android:layout_marginEnd="8dp"
         android:background="@drawable/plugin_tag_bg"
         android:paddingStart="8dp"
@@ -53,23 +53,24 @@
             android:layout_height="48dp"
             android:src="@drawable/ic_refresh"
             android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="刷新"
+            android:contentDescription="@string/refresh"
             android:visibility="gone"
             android:padding="12dp"
-            android:rotation="45"
-            app:tint="@color/text_primary" />
+            android:scaleType="fitCenter"
+            app:tint="?attr/colorOnSurface" />
 
         <!-- Add button (for plugin manager) -->
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <ImageButton
             android:id="@+id/fab_add_plugin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:src="@drawable/ic_add"
-            android:contentDescription="添加插件"
-            app:backgroundTint="@color/primary"
-            app:tint="@color/on_primary"
-            app:fabSize="mini"
-            android:visibility="gone" />
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/add_plugin_menu"
+            android:visibility="gone"
+            android:padding="12dp"
+            android:scaleType="fitCenter"
+            app:tint="?attr/colorPrimary" />
 
     </LinearLayout>
 

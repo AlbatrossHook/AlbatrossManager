@@ -24,7 +24,7 @@
             android:textStyle="bold"
             android:textSize="16sp"
             android:padding="16dp"
-            android:background="@color/gray_light" />
+            android:background="?attr/colorSurfaceContainerHigh" />
 
         <TextView
             android:id="@+id/tv_meta_data"

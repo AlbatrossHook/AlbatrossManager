@@ -64,6 +64,7 @@ public class PluginTargetAppsFragment extends Fragment {
 
   private ProgressBar progressBar;
   private TextView tvEmpty;
+  private View emptyState;
   private AppSelectAdapter adapter;
   private PluginRuleDatabaseHelper ruleDb;
   private List<AppInfo> allApps;
@@ -112,6 +113,7 @@ public class PluginTargetAppsFragment extends Fragment {
     recyclerView = view.findViewById(R.id.recycler_view);
     progressBar = view.findViewById(R.id.progress_bar);
     tvEmpty = view.findViewById(R.id.tv_empty);
+    emptyState = view.findViewById(R.id.empty_state);
     etSearch = view.findViewById(R.id.et_search);
     ivClearSearch = view.findViewById(R.id.iv_clear_search);
 
@@ -198,7 +200,7 @@ public class PluginTargetAppsFragment extends Fragment {
   private void loadAppList() {
     progressBar.setVisibility(View.VISIBLE);
     recyclerView.setVisibility(View.GONE);
-    tvEmpty.setVisibility(View.GONE);
+    hideEmptyState();
     executor.execute(() -> {
       String supportedAppsStr = plugin.getSupportedApps();
       if (supportedAppsStr.isEmpty())
@@ -256,6 +258,10 @@ public class PluginTargetAppsFragment extends Fragment {
   /**
    * 显示弹出菜单
    */
+  private void hideEmptyState() {
+    emptyState.setVisibility(View.GONE);
+  }
+
   private void showPopupMenu() {
     if (popupMenu == null) {
       createPopupMenu();
@@ -315,7 +321,7 @@ public class PluginTargetAppsFragment extends Fragment {
         ViewGroup.LayoutParams.WRAP_CONTENT,
         ViewGroup.LayoutParams.WRAP_CONTENT,
         true);
-    popupMenu.setBackgroundDrawable(getContext().getResources().getDrawable(android.R.drawable.dialog_holo_light_frame));
+    popupMenu.setBackgroundDrawable(null);
     popupMenu.setElevation(8f);
   }
 
@@ -370,11 +376,11 @@ public class PluginTargetAppsFragment extends Fragment {
   private void updateEmptyState() {
     if (filteredApps.isEmpty()) {
       recyclerView.setVisibility(View.GONE);
-      tvEmpty.setVisibility(View.VISIBLE);
+      emptyState.setVisibility(View.VISIBLE);
       tvEmpty.setText(getString(R.string.no_apps_found, etSearch.getText().toString().trim()));
     } else {
       recyclerView.setVisibility(View.VISIBLE);
-      tvEmpty.setVisibility(View.GONE);
+      hideEmptyState();
     }
   }
 

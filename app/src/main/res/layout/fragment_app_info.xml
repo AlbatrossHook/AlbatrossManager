@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:background="?android:attr/colorBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,18 +13,17 @@
         android:padding="16dp">
 
         <!-- 应用图标和基本信息卡片 -->
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
+            style="@style/CardViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            style="@style/CardViewStyle"
-            app:cardElevation="4dp">
+            android:layout_marginBottom="12dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="20dp">
+                android:padding="16dp">
 
                 <!-- 应用图标和名称 -->
                 <LinearLayout
@@ -32,14 +31,14 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:layout_marginBottom="16dp">
+                    android:layout_marginBottom="12dp">
 
                     <ImageView
                         android:id="@+id/iv_app_icon"
                         android:layout_width="64dp"
                         android:layout_height="64dp"
-                        android:src="@drawable/ic_launcher_foreground"
-                        android:background="@drawable/ic_launcher_background"
+                        android:src="@drawable/ic_app_placeholder"
+                        android:background="@drawable/ic_app_placeholder"
                         android:scaleType="centerCrop"
                         android:layout_marginEnd="16dp" />
 
@@ -54,7 +53,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             style="@style/TextTitle"
-                            android:textColor="@color/text_primary"
+                            android:textColor="?attr/colorOnSurface"
                             android:layout_marginBottom="4dp" />
 
                         <TextView
@@ -62,7 +61,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             style="@style/TextCaption"
-                            android:textColor="@color/text_secondary"
+                            android:textColor="?attr/colorOnSurfaceVariant"
                             android:fontFamily="monospace" />
                     </LinearLayout>
                 </LinearLayout>
@@ -72,16 +71,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:gravity="center"
-                    android:spacing="8dp">
+                    android:gravity="center">
 
                     <!-- 第一行按钮 -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:gravity="center"
-                        android:spacing="8dp">
+                        android:gravity="center">
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/btn_open_app"
@@ -90,8 +87,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/open_app"
-                            android:backgroundTint="@color/success"
-                            android:textColor="@color/button_text_on_success"
+                            android:backgroundTint="?attr/colorSuccessContainer"
+                            android:textColor="?attr/colorOnSuccessContainer"
                             android:layout_marginEnd="4dp" />
 
                         <com.google.android.material.button.MaterialButton
@@ -101,8 +98,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/close_app"
-                            android:backgroundTint="@color/warning"
-                            android:textColor="@color/button_text_on_warning"
+                            android:backgroundTint="?attr/colorWarningContainer"
+                            android:textColor="?attr/colorOnWarningContainer"
                             android:layout_marginHorizontal="4dp" />
 
                         <com.google.android.material.button.MaterialButton
@@ -112,8 +109,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/freeze_app"
-                            android:backgroundTint="@color/error"
-                            android:textColor="@color/button_text_on_error"
+                            android:backgroundTint="?attr/colorErrorContainer"
+                            android:textColor="?attr/colorOnErrorContainer"
                             android:layout_marginStart="4dp" />
                     </LinearLayout>
 
@@ -122,8 +119,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:gravity="center"
-                        android:spacing="8dp">
+                        android:gravity="center">
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/btn_backup_app"
@@ -132,8 +128,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/backup_app"
-                            android:backgroundTint="@color/primary"
-                            android:textColor="@color/button_text_primary"
+                            android:backgroundTint="?attr/colorSecondaryContainer"
+                            android:textColor="?attr/colorOnSecondaryContainer"
                             android:layout_marginEnd="4dp" />
 
                         <com.google.android.material.button.MaterialButton
@@ -143,22 +139,22 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/restore_app"
-                            android:backgroundTint="@color/accent"
-                            android:textColor="@color/button_text_on_accent"
+                            android:backgroundTint="?attr/colorTertiaryContainer"
+                            android:textColor="?attr/colorOnTertiaryContainer"
                             android:layout_marginStart="4dp" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
         <!-- 版本信息卡片 -->
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
+            style="@style/CardViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="12dp"
             android:elevation="2dp"
-            app:cardCornerRadius="8dp"
-            app:cardBackgroundColor="@color/surface_color">
+            app:cardBackgroundColor="?attr/colorSurface">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -172,7 +168,7 @@
                     android:text="@string/version_info"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="@color/text_primary"
+                    android:textColor="?attr/colorOnSurface"
                     android:layout_marginBottom="12dp" />
 
                 <LinearLayout
@@ -192,7 +188,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/version_name"
                             android:textSize="12sp"
-                            android:textColor="@color/text_secondary"
+                            android:textColor="?attr/colorOnSurfaceVariant"
                             android:layout_marginBottom="4dp" />
 
                         <TextView
@@ -201,14 +197,14 @@
                             android:layout_height="wrap_content"
                             android:text="@string/loading"
                             android:textSize="16sp"
-                            android:textColor="@color/text_primary"
+                            android:textColor="?attr/colorOnSurface"
                             android:fontFamily="monospace" />
                     </LinearLayout>
 
                     <View
                         android:layout_width="1dp"
                         android:layout_height="40dp"
-                        android:background="@color/divider_color"
+                        android:background="?attr/colorOutlineVariant"
                         android:layout_marginHorizontal="16dp" />
 
                     <LinearLayout
@@ -222,7 +218,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/version_code"
                             android:textSize="12sp"
-                            android:textColor="@color/text_secondary"
+                            android:textColor="?attr/colorOnSurfaceVariant"
                             android:layout_marginBottom="4dp" />
 
                         <TextView
@@ -231,21 +227,21 @@
                             android:layout_height="wrap_content"
                             android:text="@string/loading"
                             android:textSize="16sp"
-                            android:textColor="@color/text_primary"
+                            android:textColor="?attr/colorOnSurface"
                             android:fontFamily="monospace" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
         <!-- 路径信息卡片 -->
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
+            style="@style/CardViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="12dp"
             android:elevation="2dp"
-            app:cardCornerRadius="8dp"
-            app:cardBackgroundColor="@color/surface_color">
+            app:cardBackgroundColor="?attr/colorSurface">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -259,7 +255,7 @@
                     android:text="@string/path_info"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="@color/text_primary"
+                    android:textColor="?attr/colorOnSurface"
                     android:layout_marginBottom="12dp" />
 
                 <!-- 应用路径 -->
@@ -274,7 +270,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/app_path"
                         android:textSize="12sp"
-                        android:textColor="@color/text_secondary"
+                        android:textColor="?attr/colorOnSurfaceVariant"
                         android:layout_marginBottom="4dp" />
 
                     <TextView
@@ -283,11 +279,11 @@
                         android:layout_height="wrap_content"
                         android:text="@string/loading"
                         android:textSize="14sp"
-                        android:textColor="@color/text_primary"
+                        android:textColor="?attr/colorOnSurface"
                         android:fontFamily="monospace"
-                        android:background="@color/gray_light"
+                        android:background="?attr/colorSurfaceContainerHigh"
                         android:padding="8dp"
-                        android:singleLine="false" />
+                        android:maxLines="4" />
                 </LinearLayout>
 
                 <!-- 数据路径 -->
@@ -301,7 +297,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/data_path"
                         android:textSize="12sp"
-                        android:textColor="@color/text_secondary"
+                        android:textColor="?attr/colorOnSurfaceVariant"
                         android:layout_marginBottom="4dp" />
 
                     <TextView
@@ -310,23 +306,23 @@
                         android:layout_height="wrap_content"
                         android:text="@string/loading"
                         android:textSize="14sp"
-                        android:textColor="@color/text_primary"
+                        android:textColor="?attr/colorOnSurface"
                         android:fontFamily="monospace"
-                        android:background="@color/gray_light"
+                        android:background="?attr/colorSurfaceContainerHigh"
                         android:padding="8dp"
-                        android:singleLine="false" />
+                        android:maxLines="4" />
                 </LinearLayout>
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
         <!-- 时间信息卡片 -->
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
+            style="@style/CardViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="12dp"
             android:elevation="2dp"
-            app:cardCornerRadius="8dp"
-            app:cardBackgroundColor="@color/surface_color">
+            app:cardBackgroundColor="?attr/colorSurface">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -340,7 +336,7 @@
                     android:text="@string/time_info"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="@color/text_primary"
+                    android:textColor="?attr/colorOnSurface"
                     android:layout_marginBottom="12dp" />
 
                 <LinearLayout
@@ -360,7 +356,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/install_time"
                             android:textSize="12sp"
-                            android:textColor="@color/text_secondary"
+                            android:textColor="?attr/colorOnSurfaceVariant"
                             android:layout_marginBottom="4dp" />
 
                         <TextView
@@ -369,14 +365,14 @@
                             android:layout_height="wrap_content"
                             android:text="@string/loading"
                             android:textSize="14sp"
-                            android:textColor="@color/text_primary"
+                            android:textColor="?attr/colorOnSurface"
                             android:fontFamily="monospace" />
                     </LinearLayout>
 
                     <View
                         android:layout_width="1dp"
                         android:layout_height="40dp"
-                        android:background="@color/divider_color"
+                        android:background="?attr/colorOutlineVariant"
                         android:layout_marginHorizontal="16dp" />
 
                     <LinearLayout
@@ -390,7 +386,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/last_update_time"
                             android:textSize="12sp"
-                            android:textColor="@color/text_secondary"
+                            android:textColor="?attr/colorOnSurfaceVariant"
                             android:layout_marginBottom="4dp" />
 
                         <TextView
@@ -399,21 +395,21 @@
                             android:layout_height="wrap_content"
                             android:text="@string/loading"
                             android:textSize="14sp"
-                            android:textColor="@color/text_primary"
+                            android:textColor="?attr/colorOnSurface"
                             android:fontFamily="monospace" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
         <!-- 系统信息卡片 -->
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
+            style="@style/CardViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="12dp"
             android:elevation="2dp"
-            app:cardCornerRadius="8dp"
-            app:cardBackgroundColor="@color/surface_color">
+            app:cardBackgroundColor="?attr/colorSurface">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -427,7 +423,7 @@
                     android:text="@string/system_info"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="@color/text_primary"
+                    android:textColor="?attr/colorOnSurface"
                     android:layout_marginBottom="12dp" />
 
                 <!-- 应用类型 -->
@@ -442,7 +438,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/app_type"
                         android:textSize="12sp"
-                        android:textColor="@color/text_secondary"
+                        android:textColor="?attr/colorOnSurfaceVariant"
                         android:layout_marginBottom="4dp" />
 
                     <TextView
@@ -451,7 +447,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/loading"
                         android:textSize="14sp"
-                        android:textColor="@color/text_primary" />
+                        android:textColor="?attr/colorOnSurface" />
                 </LinearLayout>
 
                 <!-- 应用UID -->
@@ -466,7 +462,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/app_uid"
                         android:textSize="12sp"
-                        android:textColor="@color/text_secondary"
+                        android:textColor="?attr/colorOnSurfaceVariant"
                         android:layout_marginBottom="4dp" />
 
                     <TextView
@@ -475,7 +471,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/loading"
                         android:textSize="14sp"
-                        android:textColor="@color/text_primary"
+                        android:textColor="?attr/colorOnSurface"
                         android:fontFamily="monospace" />
                 </LinearLayout>
 
@@ -491,7 +487,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/freeze_status"
                         android:textSize="12sp"
-                        android:textColor="@color/text_secondary"
+                        android:textColor="?attr/colorOnSurfaceVariant"
                         android:layout_marginBottom="4dp" />
 
                     <TextView
@@ -500,7 +496,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/loading"
                         android:textSize="14sp"
-                        android:textColor="@color/text_primary" />
+                        android:textColor="?attr/colorOnSurface" />
                 </LinearLayout>
 
                 <!-- 签名信息 -->
@@ -515,7 +511,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/signature_hash"
                         android:textSize="12sp"
-                        android:textColor="@color/text_secondary"
+                        android:textColor="?attr/colorOnSurfaceVariant"
                         android:layout_marginBottom="4dp" />
 
                     <TextView
@@ -524,11 +520,11 @@
                         android:layout_height="wrap_content"
                         android:text="@string/loading"
                         android:textSize="12sp"
-                        android:textColor="@color/text_primary"
+                        android:textColor="?attr/colorOnSurface"
                         android:fontFamily="monospace"
-                        android:background="@color/gray_light"
+                        android:background="?attr/colorSurfaceContainerHigh"
                         android:padding="8dp"
-                        android:singleLine="false" />
+                        android:maxLines="4" />
                 </LinearLayout>
 
                 <!-- 进程信息 -->
@@ -542,7 +538,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/running_processes"
                         android:textSize="12sp"
-                        android:textColor="@color/text_secondary"
+                        android:textColor="?attr/colorOnSurfaceVariant"
                         android:layout_marginBottom="4dp" />
 
                     <TextView
@@ -551,14 +547,14 @@
                         android:layout_height="wrap_content"
                         android:text="@string/loading"
                         android:textSize="12sp"
-                        android:textColor="@color/text_primary"
+                        android:textColor="?attr/colorOnSurface"
                         android:fontFamily="monospace"
-                        android:background="@color/gray_light"
+                        android:background="?attr/colorSurfaceContainerHigh"
                         android:padding="8dp"
-                        android:singleLine="false" />
+                        android:maxLines="4" />
                 </LinearLayout>
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 </ScrollView>

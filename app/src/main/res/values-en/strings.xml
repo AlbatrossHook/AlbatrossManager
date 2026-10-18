@@ -414,4 +414,87 @@
     <string name="disable_feature_pending">Disable feature pending</string>
     <string name="cannot_open_app">Cannot open app</string>
     <string name="open_app_failed">Open app failed: %s</string>
+
+    <!-- Keys present in the default locale but missing here -->
+    <string name="app_frozen_status">Frozen</string>
+    <string name="app_normal_status">Normal</string>
+    <string name="app_uid">App UID</string>
+    <string name="app_unfreeze_failed">Failed to unfreeze app</string>
+    <string name="app_unfrozen">App unfrozen</string>
+    <string name="backup_app">Backup</string>
+    <string name="backup_failed">Backup failed</string>
+    <string name="backup_password_hint">Enter encryption password (optional)</string>
+    <string name="backup_password_title">Backup password</string>
+    <string name="backup_processing">Backing up...</string>
+    <string name="backup_success">Backup succeeded</string>
+    <string name="check_core_availability">Load core</string>
+    <string name="finish_core_availability">Core compatibility checked</string>
+    <string name="freeze_status">Freeze state</string>
+    <string name="plugin_app_uninstalled">The plugin app is uninstalled and unusable</string>
+    <string name="plugin_enabled">Enable plugin</string>
+    <string name="restore_app">Restore</string>
+    <string name="restore_failed">Restore failed</string>
+    <string name="restore_password_hint">Enter decryption password (optional)</string>
+    <string name="restore_password_title">Restore password</string>
+    <string name="restore_processing">Restoring...</string>
+    <string name="restore_success">Restore succeeded</string>
+    <string name="selinux_status">SELinux state:</string>
+    <string name="server_version_description">Core release notes</string>
+    <string name="unfreeze_app">Unfreeze</string>
+
+    <!-- Runtime options -->
+    <string name="runtime_options_title">Runtime options</string>
+    <string name="runtime_options_hint">These options apply to processes injected afterwards</string>
+    <string name="option_jit">JIT</string>
+    <string name="option_jit_title">JIT optimized compilation</string>
+    <string name="option_jit_desc">When off, injected processes run in interpreter mode: more stable but slower</string>
+    <string name="option_anti_detection">Anti-detect</string>
+    <string name="option_anti_detection_title">Anti-detection</string>
+    <string name="option_anti_detection_desc">Hides the injected libalbatross_base, allocates code from memfd and loads plugin dex in memory</string>
+    <string name="option_memfd_inject">memfd</string>
+    <string name="option_memfd_inject_title">In-memory injection (memfd)</string>
+    <string name="option_memfd_inject_desc">Leaves nothing on disk; best used together with anti-detection</string>
+    <string name="option_auto_start_title">Auto start server</string>
+    <string name="option_auto_start_desc">Start the server automatically when the core is available and the app opens</string>
+    <string name="option_kernel_hide_title">Kernel-level hide</string>
+    <string name="option_kernel_hide_desc">Requires rwbp.ko on the device: hides the injected dex/so/memfd paths and zeroes libart/libc in smaps, so the core code and code slices stay invisible to the target app after hooking (traceless hooks). Cannot be undone.</string>
+    <string name="option_kernel_hide_button">Run kernel hide</string>
+    <string name="option_kernel_hide_running">Running...</string>
+    <string name="option_kernel_hide_on">Enabled</string>
+    <string name="option_kernel_hide_off">Disabled</string>
+    <string name="option_kernel_hide_success">Kernel-level hide enabled</string>
+    <string name="option_kernel_hide_failed">Kernel hide failed: rwbp.ko may be missing or the server is not running</string>
+    <string name="option_applied">Applied, effective for processes injected afterwards</string>
+    <string name="option_need_new_agent">The current server package does not support these options; rebuild and import a new package</string>
+    <string name="option_state_title">Current options:</string>
+    <string name="state_on">on</string>
+    <string name="state_off">off</string>
+    <string name="save_root_path_button">Save root path</string>
+    <string name="save_server_address_button">Save address</string>
+    <string name="save_su_path_button">Save su path</string>
+    <string name="su_path_saved_success">su path saved</string>
+    <string name="server_address_saved_success">Address saved, restart the server to take effect</string>
+    <string name="save_root_path_failed_format">Failed to save path: %1$s</string>
+    <string name="load_server_versions_failed_format">Failed to load server versions: %1$s</string>
+    <string name="server_start_success_cost">Server started (%1$s, %2$.1fs)</string>
+    <string name="server_start_failed_reason">Start failed: %1$s</string>
+    <string name="server_start_no_output">No output; check root permission and that the server files are complete</string>
+    <string name="server_starting">Starting...</string>
+    <string name="server_stopping">Stopping...</string>
+    <string name="server_start_cost_format">Startup took %.1fs</string>
+    <string name="core_init_fail_format">Core init failed: %1$s</string>
+    <string name="selinux_enforcing">Enforcing</string>
+    <string name="selinux_permissive">Permissive</string>
+
+    <!-- Broadcast commands / plugin install -->
+    <string name="zip_not_found_format">Server package not found: %1$s</string>
+    <string name="missing_agent_file_format">Server package is missing %1$s</string>
+    <string name="plugin_package_required">A plugin package name or apk path is required</string>
+    <string name="plugin_not_installed_format">Plugin is not installed: %1$s</string>
+    <string name="plugin_install_failed_format">Failed to install plugin: %1$s</string>
+    <string name="plugin_metadata_missing_format">%1$s is not an Albatross plugin (missing albatross_plugin metadata)</string>
+    <string name="plugin_save_failed_format">Failed to save plugin: %1$s</string>
+    <string name="plugin_not_added_format">Plugin is not added yet: %1$s</string>
+    <string name="plugin_target_required">Targets are required</string>
+    <string name="back">Back</string>
 </resources>

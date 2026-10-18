@@ -29,7 +29,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Switch;
+import androidx.appcompat.widget.SwitchCompat;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,7 +49,7 @@ public class PluginConfigFragment extends Fragment {
   private EditText etParam1;
   private EditText etParam2;
   private ImageView ivPluginIcon;
-  private Switch switchPluginEnabled;
+  private SwitchCompat switchPluginEnabled;
   private LinearLayout layoutUninstallWarning;
   private TextView tvUninstallWarning;
   private Button btnCopyParam1;

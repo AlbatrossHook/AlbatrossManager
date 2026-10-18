@@ -32,6 +32,42 @@
         <activity android:name=".activity.PluginDetailActivity" />
         <activity android:name=".activity.AppDetailActivity"/>
 
+        <!--
+          adb/脚本自动化入口。exported 但要求调用方持有 DUMP 权限：
+          adb shell 有该权限，普通第三方应用没有，避免被任意应用借 root 导入恶意核心。
+        -->
+        <receiver
+            android:name=".receiver.ManagerCommandReceiver"
+            android:exported="true"
+            android:permission="android.permission.DUMP">
+            <intent-filter>
+                <action android:name="qing.albatross.manager.action.INSTALL_CORE" />
+                <action android:name="qing.albatross.manager.action.LOAD_CORE" />
+                <action android:name="qing.albatross.manager.action.START_SERVER" />
+                <action android:name="qing.albatross.manager.action.STOP_SERVER" />
+                <action android:name="qing.albatross.manager.action.INSTALL_PLUGIN" />
+                <action android:name="qing.albatross.manager.action.SET_RULE" />
+                <action android:name="qing.albatross.manager.action.SET_OPTION" />
+                <action android:name="qing.albatross.manager.action.INJECT" />
+                <action android:name="qing.albatross.manager.action.STATUS" />
+                <action android:name="qing.albatross.manager.action.SELECT_CORE" />
+                <action android:name="qing.albatross.manager.action.DELETE_CORE" />
+                <action android:name="qing.albatross.manager.action.SET_ROOT_PATH" />
+                <action android:name="qing.albatross.manager.action.SET_SERVER_ADDRESS" />
+                <action android:name="qing.albatross.manager.action.SET_SU_PATH" />
+                <action android:name="qing.albatross.manager.action.KERNEL_HIDE" />
+                <action android:name="qing.albatross.manager.action.SET_PLUGIN_ENABLED" />
+                <action android:name="qing.albatross.manager.action.DELETE_PLUGIN" />
+                <action android:name="qing.albatross.manager.action.SET_PLUGIN_PARAMS" />
+                <action android:name="qing.albatross.manager.action.SYNC_PLUGINS" />
+                <action android:name="qing.albatross.manager.action.OPEN_APP" />
+                <action android:name="qing.albatross.manager.action.FORCE_STOP_APP" />
+                <action android:name="qing.albatross.manager.action.FREEZE_APP" />
+                <action android:name="qing.albatross.manager.action.UNFREEZE_APP" />
+                <action android:name="qing.albatross.manager.action.APP_INFO" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

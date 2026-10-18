@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      M3 没有 success/warning/info 语义角色，这里按 M3 的
+      "容器色 + on 容器色" 命名方式补上，布局用 ?attr/colorXxxContainer，
+      Java 侧用 MaterialColors.getColor(view, R.attr.colorXxx)。
+    -->
+    <attr name="colorSuccess" format="color" />
+    <attr name="colorOnSuccess" format="color" />
+    <attr name="colorSuccessContainer" format="color" />
+    <attr name="colorOnSuccessContainer" format="color" />
+
+    <attr name="colorWarning" format="color" />
+    <attr name="colorOnWarning" format="color" />
+    <attr name="colorWarningContainer" format="color" />
+    <attr name="colorOnWarningContainer" format="color" />
+
+    <attr name="colorInfo" format="color" />
+    <attr name="colorOnInfo" format="color" />
+    <attr name="colorInfoContainer" format="color" />
+    <attr name="colorOnInfoContainer" format="color" />
+</resources>

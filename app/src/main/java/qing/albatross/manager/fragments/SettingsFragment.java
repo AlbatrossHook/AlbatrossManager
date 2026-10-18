@@ -16,7 +16,8 @@
 package qing.albatross.manager.fragments;
 
 import android.app.Activity;
-import android.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -34,6 +35,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -48,10 +50,11 @@ import qing.albatross.manager.adapter.ServerVersionAdapter;
 import qing.albatross.manager.data.ConfigManager;
 import qing.albatross.manager.data.ServerDatabaseHelper;
 import qing.albatross.manager.model.ServerInfo;
-import qing.albatross.manager.utils.ArchitectureUtils;
+import qing.albatross.manager.plugin.PluginDelegate;
+import qing.albatross.manager.utils.CoreInstaller;
 import qing.albatross.manager.utils.FileUtils;
+import qing.albatross.manager.utils.RuntimeOptions;
 import qing.albatross.manager.utils.ServerManager;
-import qing.albatross.manager.utils.ZipExtractor;
 
 public class SettingsFragment extends Fragment implements ServerVersionAdapter.OnVersionActionListener {
 
@@ -61,6 +64,13 @@ public class SettingsFragment extends Fragment implements ServerVersionAdapter.O
   private LinearLayout tvNoVersions;
   private EditText etRootPath;
   private Button btnSaveRootPath;
+  private Button btnKernelHide;
+  private SwitchCompat swJit;
+  private SwitchCompat swAntiDetection;
+  private SwitchCompat swMemfdInject;
+  private SwitchCompat swAutoStart;
+  private TextView tvKernelHideState;
+  private TextView tvOptionState;
   private ServerDatabaseHelper dbHelper;
   private ExecutorService executor = Executors.newSingleThreadExecutor();
   private String currentVersion;
@@ -86,9 +96,17 @@ public class SettingsFragment extends Fragment implements ServerVersionAdapter.O
     Button btnImportServer = view.findViewById(R.id.btn_import_server);
     Button btnSuSave = view.findViewById(R.id.btn_save_su_path);
     Button btnSaveAddress = view.findViewById(R.id.btn_save_server_address);
+    swJit = view.findViewById(R.id.sw_jit);
+    swAntiDetection = view.findViewById(R.id.sw_anti_detection);
+    swMemfdInject = view.findViewById(R.id.sw_memfd_inject);
+    swAutoStart = view.findViewById(R.id.sw_auto_start);
+    btnKernelHide = view.findViewById(R.id.btn_kernel_hide);
+    tvKernelHideState = view.findViewById(R.id.tv_kernel_hide_state);
+    tvOptionState = view.findViewById(R.id.tv_option_state);
 
     ConfigManager configManager = ConfigManager.getInstance(getContext());
     etServerAddress.setText(configManager.getServerAddress());
+    setupRuntimeOptions(view, configManager);
 
     // 初始化列表
     rvServerVersions.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -147,7 +165,7 @@ public class SettingsFragment extends Fragment implements ServerVersionAdapter.O
         } catch (Exception e) {
           e.printStackTrace();
           requireActivity().runOnUiThread(() ->
-              Toast.makeText(requireContext(), "保存路径失败: " + e.getMessage(), Toast.LENGTH_SHORT).show()
+              Toast.makeText(requireContext(), getString(R.string.save_root_path_failed_format, e.getMessage()), Toast.LENGTH_SHORT).show()
           );
         }
       });
@@ -155,10 +173,95 @@ public class SettingsFragment extends Fragment implements ServerVersionAdapter.O
   }
 
   /**
+   * 运行选项：开关直接读写配置，改动后重新下发给已连接的服务
+   */
+  private void setupRuntimeOptions(View view, ConfigManager configManager) {
+    swJit.setChecked(configManager.isJitEnabled());
+    swAntiDetection.setChecked(configManager.isAntiDetectionEnabled());
+    swMemfdInject.setChecked(configManager.isMemfdInjectEnabled());
+    swAutoStart.setChecked(configManager.isAutoStartServerEnabled());
+    tvKernelHideState.setText(configManager.getKpmHideState() ?
+        R.string.option_kernel_hide_on : R.string.option_kernel_hide_off);
+    updateOptionState();
+
+    swJit.setOnCheckedChangeListener((buttonView, isChecked) -> {
+      configManager.setJitEnabled(isChecked);
+      onRuntimeOptionChanged();
+    });
+    swAntiDetection.setOnCheckedChangeListener((buttonView, isChecked) -> {
+      configManager.setAntiDetectionEnabled(isChecked);
+      onRuntimeOptionChanged();
+    });
+    swMemfdInject.setOnCheckedChangeListener((buttonView, isChecked) -> {
+      configManager.setMemfdInjectEnabled(isChecked);
+      onRuntimeOptionChanged();
+    });
+    swAutoStart.setOnCheckedChangeListener((buttonView, isChecked) -> {
+      configManager.setAutoStartServerEnabled(isChecked);
+      updateOptionState();
+    });
+    btnKernelHide.setOnClickListener(v -> runKernelHide());
+    //整行点击等同于切换开关
+    view.findViewById(R.id.row_jit).setOnClickListener(v -> swJit.toggle());
+    view.findViewById(R.id.row_anti_detection).setOnClickListener(v -> swAntiDetection.toggle());
+    view.findViewById(R.id.row_memfd_inject).setOnClickListener(v -> swMemfdInject.toggle());
+    view.findViewById(R.id.row_auto_start).setOnClickListener(v -> swAutoStart.toggle());
+  }
+
+  private void updateOptionState() {
+    tvOptionState.setText(getString(R.string.option_state_title) + " " + RuntimeOptions.describe(
+        requireContext(), getString(R.string.state_on), getString(R.string.state_off)));
+  }
+
+  /**
+   * 选项改变后重连服务，让服务端拿到新的注入 flag
+   */
+  private void onRuntimeOptionChanged() {
+    updateOptionState();
+    executor.execute(() -> {
+      boolean reApplied = PluginDelegate.reApplyRuntimeOptions(dbHelper, requireContext());
+      String message;
+      if (reApplied && !PluginDelegate.isAgentDexSupportOptions()) {
+        message = getString(R.string.option_need_new_agent);
+      } else {
+        message = getString(R.string.option_applied);
+      }
+      if (isAdded()) {
+        requireActivity().runOnUiThread(() ->
+            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show());
+      }
+    });
+  }
+
+  /**
+   * 内核隐藏：需要设备加载了 rwbp.ko，开启后不可撤销
+   */
+  private void runKernelHide() {
+    btnKernelHide.setEnabled(false);
+    btnKernelHide.setText(R.string.option_kernel_hide_running);
+    executor.execute(() -> {
+      boolean hidden = PluginDelegate.extendKpmHide();
+      if (hidden) {
+        ConfigManager.getInstance(requireContext()).setKpmHideState(true);
+      }
+      if (!isAdded()) {
+        return;
+      }
+      requireActivity().runOnUiThread(() -> {
+        btnKernelHide.setEnabled(true);
+        btnKernelHide.setText(R.string.option_kernel_hide_button);
+        tvKernelHideState.setText(hidden ?
+            R.string.option_kernel_hide_on : R.string.option_kernel_hide_off);
+        Toast.makeText(requireContext(), hidden ?
+            R.string.option_kernel_hide_success : R.string.option_kernel_hide_failed, Toast.LENGTH_SHORT).show();
+      });
+    });
+  }
+
+  /**
    * 选择服务ZIP包
    */
-  private void selectServerZip() {
-    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+  private void selectServerZip() {    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
     intent.setType("application/zip");
     intent.addCategory(Intent.CATEGORY_OPENABLE);
     filePickerLauncher.launch(intent);
@@ -203,7 +306,7 @@ public class SettingsFragment extends Fragment implements ServerVersionAdapter.O
       } catch (Exception e) {
         e.printStackTrace();
         requireActivity().runOnUiThread(() -> {
-          Toast.makeText(requireContext(), "加载服务版本失败: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+          Toast.makeText(requireContext(), getString(R.string.load_server_versions_failed_format, e.getMessage()), Toast.LENGTH_SHORT).show();
         });
       }
     });
@@ -240,7 +343,7 @@ public class SettingsFragment extends Fragment implements ServerVersionAdapter.O
    */
   private void processServerZip(Uri zipUri) {
     // 显示加载对话框
-    AlertDialog progressDialog = new AlertDialog.Builder(requireContext())
+    AlertDialog progressDialog = new MaterialAlertDialogBuilder(requireContext())
         .setMessage(getString(R.string.processing_server_components))
         .setCancelable(false)
         .create();
@@ -248,74 +351,29 @@ public class SettingsFragment extends Fragment implements ServerVersionAdapter.O
 
     executor.execute(() -> {
       try {
-        // 创建临时解压目录
-        File tempDir = new File(requireContext().getCacheDir(), "server_temp");
-        FileUtils.deleteDirectory(tempDir);
-        FileUtils.createDirectory(tempDir);
-
-        // 解压ZIP文件
-        boolean extractSuccess = ZipExtractor.extract(
-            requireContext(),
-            zipUri,
-            tempDir.getAbsolutePath()
-        );
-
-        if (!extractSuccess) {
-          showError(getString(R.string.zip_extract_failed_message));
+        CoreInstaller.Package packageInfo = CoreInstaller.extract(requireContext(), zipUri);
+        if (!packageInfo.isOk()) {
+          showError(packageInfo.error);
           return;
         }
-        File resourceDir = new File(tempDir, "resource");
-        if (resourceDir.exists()) {
-          tempDir = resourceDir;
-        }
-        // 读取版本信息
-        File versionFile = new File(tempDir, "version");
-        if (!versionFile.exists()) {
-          showError(getString(R.string.zip_incomplete_message));
-          return;
-        }
-
-        String version = FileUtils.readFileToString(versionFile);
-        if (version == null || version.isEmpty()) {
-          showError(getString(R.string.version_read_failed_message));
-          return;
-        }
-
-        // 新增：读取描述信息
-        String description = "";
-        File descriptionFile = new File(tempDir, "description");
-        if (descriptionFile.exists()) {
-          description = FileUtils.readFileToString(descriptionFile);
-          // 如果描述为空，设置默认文本
-          if (description == null) description = getString(R.string.no_description_info);
-        } else {
-          description = getString(R.string.no_description_info);
-        }
-
-        // 检查版本是否已存在
-        boolean versionExists = dbHelper.checkVersionExists(version);
-
-        if (versionExists) {
+        if (dbHelper.checkVersionExists(packageInfo.version)) {
           // 提示用户是否覆盖
-          String finalDescription = description;
-          File finalTempDir = tempDir;
           requireActivity().runOnUiThread(() -> {
             progressDialog.dismiss();
-            new AlertDialog.Builder(requireContext())
+            new MaterialAlertDialogBuilder(requireContext())
                 .setTitle(getString(R.string.version_exists_title))
-                .setMessage(getString(R.string.version_exists_message_format, version))
+                .setMessage(getString(R.string.version_exists_message_format, packageInfo.version))
                 .setPositiveButton(getString(R.string.overwrite_button), (dialog, which) -> {
-                  saveServerVersion(finalTempDir, version, finalDescription, true);
+                  saveServerVersion(packageInfo, true);
                 })
                 .setNegativeButton(getString(R.string.cancel_button), null)
                 .show();
           });
         } else {
           // 直接保存新版本
-          saveServerVersion(tempDir, version, description, false);
+          saveServerVersion(packageInfo, false);
           requireActivity().runOnUiThread(progressDialog::dismiss);
         }
-
       } catch (Exception e) {
         e.printStackTrace();
         showError(getString(R.string.processing_failed_format, e.getMessage()));
@@ -329,122 +387,36 @@ public class SettingsFragment extends Fragment implements ServerVersionAdapter.O
 
 
   /**
-   * 保存服务版本
+   * 保存服务版本（导入逻辑在 CoreInstaller 里，这里只负责界面反馈）
    */
-  private void saveServerVersion(File tempDir, String version, String description, boolean overwrite) {
+  private void saveServerVersion(CoreInstaller.Package packageInfo, boolean overwrite) {
     executor.execute(() -> {
-      try {
-        // 获取设备架构
-        String primaryArch = ArchitectureUtils.getPrimaryArchitecture();
-//        List<String> supportedArchs = ArchitectureUtils.getSupportedArchitectures();
-        // 创建版本存储目录
-        Context requireContext = requireContext();
-        File versionDir = new File(requireContext.getFilesDir(), "servers/" + version);
-        if (overwrite) {
-          // 删除现有版本
-          FileUtils.deleteDirectory(versionDir);
-          dbHelper.deleteServerVersion(version);
-        }
-        FileUtils.createDirectory(versionDir);
-        // 复制主架构文件
-        File jniLibsDir = new File(tempDir, "jniLibs");
-        boolean primaryCopySuccess = copyArchitectureFiles(jniLibsDir, primaryArch, versionDir);
-        if (!primaryCopySuccess) {
-          showError(getString(R.string.no_arch_files_format, primaryArch));
-          FileUtils.deleteDirectory(versionDir);
-          return;
-        }
-        // 处理32位兼容
-        boolean is64Bit = ArchitectureUtils.is64Bit();
-        String secondaryArch = ArchitectureUtils.get32BitArchitecture();
-        boolean secondaryCopied = false;
-        if (is64Bit && secondaryArch != null) {
-          secondaryCopied = copyArchitectureFiles(jniLibsDir, secondaryArch,
-              new File(versionDir, ConfigManager.LIB32_DIR_NAME));
-        }
-        // 复制agent文件
-        File agentDir = new File(tempDir, "agent");
-        File destAgentDir = new File(versionDir, "agent");
-        FileUtils.createDirectory(destAgentDir);
-
-        FileUtils.copyFile(new File(agentDir, ConfigManager.APP_AGENT_FILE),
-            new File(destAgentDir, ConfigManager.APP_AGENT_FILE));
-        FileUtils.copyFile(new File(agentDir, ConfigManager.SYSTEM_AGENT_FILE),
-            new File(destAgentDir, ConfigManager.SYSTEM_AGENT_FILE));
-
-        // 保存到数据库（设置描述信息）
-        ServerInfo serverInfo = new ServerInfo();
-        serverInfo.setVersion(version);
-        serverInfo.setDescription(description); // 新增：设置描述信息
-        serverInfo.setPrimaryArchitecture(primaryArch);
-        serverInfo.setSupport32Bit(secondaryCopied);
-        serverInfo.setServerPath(new File(versionDir, "albatross_server").getAbsolutePath());
-        serverInfo.setLibPath(new File(versionDir, ConfigManager.LIB_NAME).getAbsolutePath());
-        serverInfo.setLib32Path(secondaryCopied ?
-            new File(versionDir, ConfigManager.LIB32_DIR_NAME + "/" + ConfigManager.LIB_NAME).getAbsolutePath() : null);
-        serverInfo.setAgentPath(destAgentDir.getAbsolutePath());
-
-        // 如果是第一个版本，自动设为当前版本
-        String extraPrompt = null;
-        if (dbHelper.getAllServerVersions().isEmpty()) {
-          dbHelper.addServerVersion(serverInfo, true);
-          extraPrompt = getString(R.string.core_import_success_default_format, version);
-        } else {
-          dbHelper.addServerVersion(serverInfo, false);
-        }
-        // 刷新列表
-        String finalExtraPrompt = extraPrompt;
-        requireActivity().runOnUiThread(() -> {
-          loadServerVersions();
-          if (finalExtraPrompt != null) {
-            Toast.makeText(requireContext, finalExtraPrompt, Toast.LENGTH_LONG).show();
-            Intent intent = requireContext.getPackageManager().getLaunchIntentForPackage(requireContext.getPackageName());
-            if (intent != null) {
-              intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-              requireContext.startActivity(intent);
-              requireActivity().finish();
-            } else {
-              System.exit(0);
-            }
-          } else
-            Toast.makeText(requireContext, getString(R.string.core_import_success_format, version),
-                Toast.LENGTH_SHORT).show();
-        });
-
-      } catch (Exception e) {
-        e.printStackTrace();
-        showError(getString(R.string.save_failed_format, e.getMessage()));
+      CoreInstaller.Result result = CoreInstaller.installExtracted(requireContext(), packageInfo,
+          overwrite, true);
+      if (!result.ok) {
+        showError(result.error);
+        return;
       }
+      requireActivity().runOnUiThread(() -> {
+        loadServerVersions();
+        if (result.firstVersion) {
+          // 第一个版本直接设为当前，需要重启应用重新加载核心
+          Toast.makeText(requireContext(),
+              getString(R.string.core_import_success_default_format, result.version), Toast.LENGTH_LONG).show();
+          Intent intent = requireContext().getPackageManager().getLaunchIntentForPackage(requireContext().getPackageName());
+          if (intent != null) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            requireContext().startActivity(intent);
+            requireActivity().finish();
+          } else {
+            System.exit(0);
+          }
+        } else {
+          Toast.makeText(requireContext(), getString(R.string.core_import_success_format, result.version),
+              Toast.LENGTH_SHORT).show();
+        }
+      });
     });
-  }
-
-  /**
-   * 复制特定架构的文件
-   */
-  private boolean copyArchitectureFiles(File jniLibsDir, String arch, File destDir) {
-    File archDir = new File(jniLibsDir, arch);
-    if (!archDir.exists() || !archDir.isDirectory()) {
-      return false;
-    }
-    FileUtils.createDirectory(destDir);
-    // 复制可执行文件
-    File serverFile = new File(archDir, "albatross_server");
-    if (!serverFile.exists()) {
-      return false;
-    }
-    File destServerFile = new File(destDir, "albatross_server");
-    if (!FileUtils.copyFile(serverFile, destServerFile)) {
-      return false;
-    }
-    // 设置可执行权限
-    FileUtils.setExecutable(destServerFile);
-    // 复制库文件
-    File libFile = new File(archDir, "libalbatross_base.so");
-    if (!libFile.exists()) {
-      return false;
-    }
-    File destLibFile = new File(destDir, ConfigManager.LIB_NAME);
-    return FileUtils.copyFile(libFile, destLibFile);
   }
 
   /**
@@ -461,7 +433,7 @@ public class SettingsFragment extends Fragment implements ServerVersionAdapter.O
    */
   @Override
   public void onVersionSwitch(ServerInfo serverInfo) {
-    new AlertDialog.Builder(requireContext())
+    new MaterialAlertDialogBuilder(requireContext())
         .setTitle(getString(R.string.switch_version_title))
         .setMessage(getString(R.string.switch_version_confirm_format, serverInfo.getVersion()))
         .setPositiveButton(getString(R.string.confirm_button), (dialog, which) -> {
@@ -475,7 +447,7 @@ public class SettingsFragment extends Fragment implements ServerVersionAdapter.O
             });
           });
         })
-        .setNegativeButton("取消", null)
+        .setNegativeButton(getString(R.string.cancel_button), null)
         .show();
   }
 
@@ -483,14 +455,14 @@ public class SettingsFragment extends Fragment implements ServerVersionAdapter.O
   @Override
   public void onShowMoreDescription(ServerInfo serverInfo) {
     // 创建显示完整描述的对话框
-    new AlertDialog.Builder(requireContext())
+    new MaterialAlertDialogBuilder(requireContext())
         .setTitle(getString(R.string.version_description_title_format, serverInfo.getVersion()))
         .setMessage(serverInfo.getDescription())
         .setPositiveButton(getString(R.string.close_button), null)
         // 允许复制描述内容
         .setNeutralButton(getString(R.string.copy_description_button), (dialog, which) -> {
           android.content.ClipboardManager clipboard = (android.content.ClipboardManager)
-              requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
+              requireContext().getSystemService(android.content.Context.CLIPBOARD_SERVICE);
           android.content.ClipData clip = android.content.ClipData.newPlainText(
               getString(R.string.server_version_description), serverInfo.getDescription());
           clipboard.setPrimaryClip(clip);
@@ -511,7 +483,7 @@ public class SettingsFragment extends Fragment implements ServerVersionAdapter.O
       return;
     }
 
-    new AlertDialog.Builder(requireContext())
+    new MaterialAlertDialogBuilder(requireContext())
         .setTitle(getString(R.string.delete_version_title))
         .setMessage(getString(R.string.delete_version_confirm_format, serverInfo.getVersion()))
         .setPositiveButton(getString(R.string.delete_confirm_button), (dialog, which) -> {
@@ -527,7 +499,7 @@ public class SettingsFragment extends Fragment implements ServerVersionAdapter.O
             requireActivity().runOnUiThread(this::loadServerVersions);
           });
         })
-        .setNegativeButton("取消", null)
+        .setNegativeButton(getString(R.string.cancel_button), null)
         .show();
   }
 
@@ -535,7 +507,7 @@ public class SettingsFragment extends Fragment implements ServerVersionAdapter.O
    * 显示重启应用对话框
    */
   private void showRestartDialog() {
-    new AlertDialog.Builder(requireContext())
+    new MaterialAlertDialogBuilder(requireContext())
         .setTitle(getString(R.string.version_switched_title))
         .setMessage(getString(R.string.restart_app_for_version_switch))
         .setPositiveButton(getString(R.string.restart_now_button), (dialog, which) -> {

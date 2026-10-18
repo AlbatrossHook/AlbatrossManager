@@ -27,7 +27,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import android.widget.ImageButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
   private TextView tvActionBarTitle;
   private TextView tvAppCount;
   private ImageButton btnRefresh;
-  private FloatingActionButton fabAddPlugin;
+  private ImageButton fabAddPlugin;
   private ViewPager2 viewPager;
 
   @Override
@@ -103,27 +103,9 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void setupStatusBar() {
-    // 设置状态栏为透明
-    getWindow().setStatusBarColor(android.graphics.Color.TRANSPARENT);
-
-    // 根据当前主题设置状态栏文字颜色
-    int nightModeFlags = getResources().getConfiguration().uiMode &
-        android.content.res.Configuration.UI_MODE_NIGHT_MASK;
-
-    if (nightModeFlags == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
-      // 暗色模式：白色文字
-      getWindow().getDecorView().setSystemUiVisibility(
-          View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
-              View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-      );
-    } else {
-      // 浅色模式：黑色文字
-      getWindow().getDecorView().setSystemUiVisibility(
-          View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
-              View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
-              View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-      );
-    }
+    // 状态栏/导航栏颜色与图标明暗由主题声明（values / values-night），
+    // 这里只让内容延伸到透明状态栏之下，inset 交给各布局的 fitsSystemWindows。
+    androidx.core.view.WindowCompat.setDecorFitsSystemWindows(getWindow(), true);
   }
 
   private void setupCustomActionBar() {
@@ -210,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
    */
   public void updateAppCount(int count) {
     if (tvAppCount != null) {
-      tvAppCount.setText(count + " 个应用");
+      tvAppCount.setText(getString(R.string.app_count_format, count));
     }
   }
 

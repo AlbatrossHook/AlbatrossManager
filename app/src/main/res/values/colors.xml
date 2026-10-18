@@ -53,6 +53,22 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     
+
+    <!-- M3 Surface Container 色阶（卡片/底栏/输入框用） -->
+    <color name="surface_container_lowest">#FFFFFF</color>
+    <color name="surface_container_low">#F7F2FA</color>
+    <color name="surface_container">#F3EDF7</color>
+    <color name="surface_container_high">#ECE6F0</color>
+    <color name="surface_container_highest">#E6E0E9</color>
+
+    <!-- 语义色的 on-container（M3 没有 success/warning/info，项目自定） -->
+    <color name="on_success">#FFFFFF</color>
+    <color name="on_success_container">#1B5E20</color>
+    <color name="on_warning">#FFFFFF</color>
+    <color name="on_warning_container">#7A4100</color>
+    <color name="on_info">#FFFFFF</color>
+    <color name="on_info_container">#0D47A1</color>
+
     <!-- Status Colors -->
     <color name="success">#4CAF50</color>
     <color name="success_container">#E8F5E9</color>
@@ -68,8 +84,8 @@
     <color name="text_hint">#CAC4D0</color>
     
     <!-- Card and Component Colors -->
-    <color name="card_background">#FFFFFF</color>
-    <color name="card_elevated">#FFFFFF</color>
+    <color name="card_background">@color/surface_container_lowest</color>
+    <color name="card_elevated">@color/surface_container_low</color>
     <color name="divider">#E7E0EC</color>
     <color name="divider_focus">#6750A4</color>
     
@@ -99,7 +115,7 @@
     <color name="gray">#79747E</color>
     <color name="blue">#2196F3</color>
     <color name="green_light">#E8F5E9</color>
-    <color name="gray_light">#F5F5F5</color>
+    <color name="gray_light">@color/surface_container_high</color>
     <color name="purple">#6750A4</color>
     <color name="orange">#FF9800</color>
     

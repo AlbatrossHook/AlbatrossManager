@@ -15,7 +15,8 @@
  */
 package qing.albatross.manager.fragments;
 
-import android.app.AlertDialog;
+import com.google.android.material.color.MaterialColors;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -154,7 +155,7 @@ public class AppInfoFragment extends Fragment {
       android.graphics.drawable.Drawable appIcon = requireContext().getPackageManager().getApplicationIcon(applicationInfo);
       ivAppIcon.setImageDrawable(appIcon);
     } catch (Exception e) {
-      ivAppIcon.setImageResource(R.drawable.ic_launcher_foreground);
+      ivAppIcon.setImageResource(R.drawable.ic_app_placeholder);
     }
     try {
       String appName = requireContext().getPackageManager().getApplicationLabel(applicationInfo).toString();
@@ -290,10 +291,10 @@ public class AppInfoFragment extends Fragment {
   private void updateFreezeButton() {
     if (isAppFrozen) {
       btnFreezeApp.setText(getString(R.string.unfreeze_app));
-      btnFreezeApp.setBackgroundTintList(requireContext().getColorStateList(R.color.success));
+      btnFreezeApp.setBackgroundTintList(android.content.res.ColorStateList.valueOf(MaterialColors.getColor(requireView(), R.attr.colorSuccess)));
     } else {
       btnFreezeApp.setText(getString(R.string.freeze_app));
-      btnFreezeApp.setBackgroundTintList(requireContext().getColorStateList(R.color.error));
+      btnFreezeApp.setBackgroundTintList(android.content.res.ColorStateList.valueOf(MaterialColors.getColor(requireView(), androidx.appcompat.R.attr.colorError)));
     }
   }
 
@@ -301,7 +302,7 @@ public class AppInfoFragment extends Fragment {
    * 显示密码输入对话框
    */
   private void showPasswordDialog(boolean isBackup) {
-    AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+    MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
     builder.setTitle(isBackup ? getString(R.string.backup_password_title) : getString(R.string.restore_password_title));
 
     // 创建输入框

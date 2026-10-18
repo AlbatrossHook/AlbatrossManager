@@ -10,15 +10,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:background="@android:color/darker_gray">
+        android:background="?attr/colorSurfaceVariant">
 
         <Button
             android:id="@+id/btn_read_storage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/read_storage_directory_title"
-            android:backgroundTint="@color/blue"
-            android:textColor="@android:color/white" />
+            android:backgroundTint="?attr/colorInfo"
+            android:textColor="?attr/colorOnPrimary" />
 
         <ProgressBar
             android:id="@+id/progress_bar"

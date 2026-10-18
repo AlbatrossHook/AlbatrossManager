@@ -23,7 +23,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginEnd="12dp"
-            android:buttonTint="@color/primary" />
+            android:buttonTint="?attr/colorPrimary" />
 
         <ImageView
             android:layout_width="20dp"
@@ -38,7 +38,7 @@
             android:layout_weight="1"
             android:text="@string/show_system_apps"
             android:textSize="16sp"
-            android:textColor="@color/text_primary"
+            android:textColor="?attr/colorOnSurface"
             android:textStyle="normal" />
 
     </LinearLayout>
@@ -59,7 +59,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginEnd="12dp"
-            android:buttonTint="@color/primary" />
+            android:buttonTint="?attr/colorPrimary" />
 
         <ImageView
             android:layout_width="20dp"
@@ -74,7 +74,7 @@
             android:layout_weight="1"
             android:text="@string/filter_plugins"
             android:textSize="16sp"
-            android:textColor="@color/text_primary"
+            android:textColor="?attr/colorOnSurface"
             android:textStyle="normal" />
 
     </LinearLayout>
@@ -83,7 +83,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/divider"
+        android:background="?attr/colorOutlineVariant"
         android:layout_marginVertical="8dp" />
 
     <!-- 全选选项 -->
@@ -102,7 +102,7 @@
             android:layout_height="20dp"
             android:src="@drawable/ic_check_all"
             android:layout_marginEnd="12dp"
-            app:tint="@color/success" />
+            app:tint="?attr/colorSuccess" />
 
         <TextView
             android:layout_width="0dp"
@@ -110,7 +110,7 @@
             android:layout_weight="1"
             android:text="@string/select_all"
             android:textSize="16sp"
-            android:textColor="@color/text_primary"
+            android:textColor="?attr/colorOnSurface"
             android:textStyle="normal" />
 
     </LinearLayout>
@@ -129,9 +129,9 @@
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/ic_clear_all"
+            android:src="@drawable/ic_clear"
             android:layout_marginEnd="12dp"
-            app:tint="@color/error" />
+            app:tint="?attr/colorError" />
 
         <TextView
             android:layout_width="0dp"
@@ -139,7 +139,7 @@
             android:layout_weight="1"
             android:text="@string/deselect_all"
             android:textSize="16sp"
-            android:textColor="@color/text_primary"
+            android:textColor="?attr/colorOnSurface"
             android:textStyle="normal" />
 
     </LinearLayout>

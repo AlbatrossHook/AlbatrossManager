@@ -15,7 +15,7 @@
  */
 package qing.albatross.manager.adapter;
 
-import android.app.AlertDialog;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import android.content.Context;
 import android.graphics.Point;
 import android.view.LayoutInflater;
@@ -93,7 +93,7 @@ public class AppSelectAdapter extends RecyclerView.Adapter<AppSelectAdapter.View
     // 点击复选框切换选择状态
     cbSelect.setOnClickListener(v -> {
       if (!appInfo.isSelected()) {
-        new AlertDialog.Builder(v.getContext())
+        new MaterialAlertDialogBuilder(v.getContext())
             .setTitle("注入确认")
             .setMessage(context.getString(R.string.injection_warning_message))
             .setPositiveButton("确认", (dialog, which) -> {
@@ -179,7 +179,7 @@ public class AppSelectAdapter extends RecyclerView.Adapter<AppSelectAdapter.View
         ViewGroup.LayoutParams.WRAP_CONTENT,
         ViewGroup.LayoutParams.WRAP_CONTENT,
         true);
-    popupWindow.setBackgroundDrawable(context.getResources().getDrawable(android.R.drawable.dialog_holo_light_frame));
+    popupWindow.setBackgroundDrawable(null);
     popupWindow.setElevation(8f);
     
     // 智能显示菜单

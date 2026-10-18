@@ -35,6 +35,12 @@ public class ConfigManager {
   private static final String KEY_CORE_AVAIL_STATE = "core_availability";
   private static final String KEY_LAST_SERVER_UPDATE = "last_server_update";
 
+  private static final String KEY_JIT_ENABLED = "jit_enabled";
+  private static final String KEY_ANTI_DETECTION = "anti_detection";
+  private static final String KEY_MEMFD_INJECT = "memfd_inject";
+  private static final String KEY_AUTO_START_SERVER = "auto_start_server";
+  private static final String KEY_KPM_HIDE_STATE = "kpm_hide_state";
+
   private static ConfigManager instance;
   private final SharedPreferences sharedPreferences;
 
@@ -106,12 +112,105 @@ public class ConfigManager {
   private void saveLastServerUpdateTime(long timestamp) {
     sharedPreferences.edit().putLong(KEY_LAST_SERVER_UPDATE, timestamp).apply();
   }
-
   /**
    * 获取服务最后更新时间
    */
   public long getLastServerUpdateTime() {
     return sharedPreferences.getLong(KEY_LAST_SERVER_UPDATE, 0);
+  }
+
+  /**
+   * 目标进程是否启用 JIT 优化编译，关闭后注入的进程走解释执行
+   */
+  public boolean isJitEnabled() {
+    return sharedPreferences.getBoolean(KEY_JIT_ENABLED, true);
+  }
+
+  public void setJitEnabled(boolean enabled) {
+    sharedPreferences.edit().putBoolean(KEY_JIT_ENABLED, enabled).apply();
+  }
+
+  /**
+   * 反检测（对抗）模式：隐藏注入的 libalbatross_base，代码走 memfd，dex 内存加载
+   */
+  public boolean isAntiDetectionEnabled() {
+    return sharedPreferences.getBoolean(KEY_ANTI_DETECTION, false);
+  }
+
+  public void setAntiDetectionEnabled(boolean enabled) {
+    sharedPreferences.edit().putBoolean(KEY_ANTI_DETECTION, enabled).apply();
+  }
+
+  /**
+   * 内存注入：注入过程不落盘
+   */
+  public boolean isMemfdInjectEnabled() {
+    return sharedPreferences.getBoolean(KEY_MEMFD_INJECT, false);
+  }
+
+  public void setMemfdInjectEnabled(boolean enabled) {
+    sharedPreferences.edit().putBoolean(KEY_MEMFD_INJECT, enabled).apply();
+  }
+
+  /**
+   * 打开应用时自动拉起服务
+   */
+  public boolean isAutoStartServerEnabled() {
+    return sharedPreferences.getBoolean(KEY_AUTO_START_SERVER, false);
+  }
+
+  public void setAutoStartServerEnabled(boolean enabled) {
+    sharedPreferences.edit().putBoolean(KEY_AUTO_START_SERVER, enabled).apply();
+  }
+
+  /**
+   * 上次内核隐藏的结果，仅用于界面展示
+   */
+  public boolean getKpmHideState() {
+    return sharedPreferences.getBoolean(KEY_KPM_HIDE_STATE, false);
+  }
+
+  public void setKpmHideState(boolean hidden) {
+    sharedPreferences.edit().putBoolean(KEY_KPM_HIDE_STATE, hidden).apply();
+  }
+
+  /**
+   * 运行选项的 key 名称与界面/广播命令共用
+   */
+  public static final String OPTION_JIT = "jit";
+  public static final String OPTION_ANTI_DETECTION = "anti_detection";
+  public static final String OPTION_MEMFD_INJECT = "memfd_inject";
+  public static final String OPTION_AUTO_START = "auto_start";
+
+  /**
+   * 按名字设置运行选项，名字非法返回 false
+   */
+  public boolean setOptionByKey(String key, boolean value) {
+    if (OPTION_JIT.equals(key)) {
+      setJitEnabled(value);
+    } else if (OPTION_ANTI_DETECTION.equals(key)) {
+      setAntiDetectionEnabled(value);
+    } else if (OPTION_MEMFD_INJECT.equals(key)) {
+      setMemfdInjectEnabled(value);
+    } else if (OPTION_AUTO_START.equals(key)) {
+      setAutoStartServerEnabled(value);
+    } else {
+      return false;
+    }
+    return true;
+  }
+
+  public boolean getOptionByKey(String key) {
+    if (OPTION_JIT.equals(key)) {
+      return isJitEnabled();
+    } else if (OPTION_ANTI_DETECTION.equals(key)) {
+      return isAntiDetectionEnabled();
+    } else if (OPTION_MEMFD_INJECT.equals(key)) {
+      return isMemfdInjectEnabled();
+    } else if (OPTION_AUTO_START.equals(key)) {
+      return isAutoStartServerEnabled();
+    }
+    return false;
   }
 
   /**

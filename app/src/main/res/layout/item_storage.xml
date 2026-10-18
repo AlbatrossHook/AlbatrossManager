@@ -33,6 +33,6 @@
         android:layout_marginStart="32dp"
         android:text="@string/file_details_title"
         android:textSize="12sp"
-        android:textColor="@android:color/darker_gray" />
+        android:textColor="?attr/colorOnSurfaceVariant" />
 
 </LinearLayout>
