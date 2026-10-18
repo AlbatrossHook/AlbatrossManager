@@ -724,21 +724,27 @@ def wait_boot(serial, timeout=300):
     die("等待开机超时: %s" % serial)
 
 
-def test_module(serial, module, reboot=True):
+def test_module(serial, module, reboot=True, allow_device=False):
     info("==== Magisk 模块测试：%s ====" % serial)
     ensure_device(serial)
-    if not serial.startswith("emulator-"):
-        die("--test-module 只在模拟器上自动执行（真机会改 /data/adb 并重启）；真机请手动刷模块验证")
-    # 清掉可能的旧模块与旧状态
+    is_emulator = serial.startswith("emulator-")
+    if not is_emulator and not allow_device:
+        die("--test-module 默认只在模拟器上执行（真机会改 /data/adb 并重启）；"
+            "确认真机可重启后加 --allow-module-on-device")
+    app_existed = bool((adb_shell(serial, "pm path %s" % MANAGER_PKG, check=False).stdout or "").strip())
+    state_existed = "yes" in (adb_su(serial, "test -d /data/adb/albatross && echo yes",
+                                     check=False).stdout or "")
+    # 清掉可能的旧模块
     adb_su(serial, "rm -rf /data/adb/modules/%s /data/adb/modules_update/%s" % (MODULE_ID, MODULE_ID),
            check=False)
-    # 共享状态目录：设备上还有别的 albatross 模块时不要清
+    # 共享状态目录：只清本次测试新建的，且设备上没有别的 albatross 模块
     other = adb_su(serial, "test -d /data/adb/modules/albatross_manager && echo yes",
                    check=False).stdout
-    if "yes" not in (other or ""):
+    if not state_existed and "yes" not in (other or ""):
         adb_su(serial, "rm -rf /data/adb/albatross", check=False)
     adb_shell(serial, "am force-stop %s" % MANAGER_PKG, check=False)
-    adb(serial, "uninstall", MANAGER_PKG, check=False)
+    if is_emulator or not app_existed:
+        adb(serial, "uninstall", MANAGER_PKG, check=False)
 
     remote = "/data/local/tmp/" + module["zip"].name
     adb(serial, "push", module["zip"], remote)
@@ -792,7 +798,10 @@ def test_module(serial, module, reboot=True):
            check=False)
     adb_su(serial, "rm -f " + shlex.quote(remote), check=False)
     adb_shell(serial, "am force-stop %s" % MANAGER_PKG, check=False)
-    adb(serial, "uninstall", MANAGER_PKG, check=False)
+    if is_emulator or not app_existed:
+        adb(serial, "uninstall", MANAGER_PKG, check=False)
+    if state_existed:
+        warn("测试前已存在 /data/adb/albatross，已保留该目录（模块自身状态可能已更新）")
     info("==== Magisk 模块测试通过（已清理模块与测试 APK） ====")
 
 
@@ -828,6 +837,10 @@ def parse_args():
     p.add_argument("--no-direct-server", dest="direct_server", action="store_false")
     p.add_argument("--test-module", action="store_true",
                    help="在 --test-device 上安装 Magisk 模块并重启验证（默认会清理）")
+    p.add_argument("--allow-module-on-device", action="store_true",
+                   help="允许 --test-module 在真机上执行（会安装模块并重启）")
+    p.add_argument("--skip-release-test", action="store_true",
+                   help="配合 --test-module：跳过 APK+core 测试，只测模块")
     p.add_argument("--no-module-reboot", action="store_true",
                    help="安装模块后不重启（sepolicy 不生效，仅用于快速冒烟）")
     p.add_argument("--keep-running", action="store_true", help="测试后不停服务/不 force-stop")
@@ -866,10 +879,12 @@ def main():
     if args.test_device:
         if not core or not core.get("version"):
             die("测试需要核心版本")
-        test_release(args.test_device, core, apk, keep_running=args.keep_running,
-                     direct=args.direct_server)
+        if not args.skip_release_test:
+            test_release(args.test_device, core, apk, keep_running=args.keep_running,
+                         direct=args.direct_server)
         if args.test_module and module:
-            test_module(args.test_device, module, reboot=not args.no_module_reboot)
+            test_module(args.test_device, module, reboot=not args.no_module_reboot,
+                        allow_device=args.allow_module_on_device)
 
     print("\n==== 产物 ====")
     print("core:   %s" % core["zip"])
