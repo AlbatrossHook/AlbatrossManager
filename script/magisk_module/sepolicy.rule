@@ -1,0 +1,7 @@
+# Albatross 运行环境：Manager(untrusted_app) 需要连接 albatross_server 监听的抽象 unix socket。
+# 服务端由本模块以 root 启动（magisk/su 域），默认 policy 不允许 untrusted_app 对它 connectto，
+# 表现为 App 里 connect 报 EACCES(13)、界面上一直连不上服务（真机 realme/一加实测）。
+# Magisk 会在 post-fs-data 阶段自动加载本文件里的规则；APatch 同样支持 sepolicy.rule。
+allow untrusted_app magisk unix_stream_socket connectto
+allow untrusted_app su unix_stream_socket connectto
+allow untrusted_app ksu unix_stream_socket connectto

@@ -56,6 +56,26 @@ Albatross Hook 插件生态的管理应用。该应用用于在已 Root 的 Andr
 ./gradlew :app:assembleRelease
 ```
 
+`RELEASE_STORE_FILE` 既支持仓库根目录下的文件名，也支持绝对路径。
+
+### 打包核心与面具模块
+
+设备端运行资产（agent dex + 各 ABI 的 native 库）由 `AlbatrossServer` 仓库维护。
+把 `AlbatrossServer` 与本项目放在同一级目录后执行：
+
+```bash
+./script/pack_release.py \
+    --keystore /path/to/qing.jks \
+    --store-password "$RELEASE_STORE_PASSWORD" \
+    --key-alias "$RELEASE_KEY_ALIAS" \
+    --key-password "$RELEASE_KEY_PASSWORD"
+```
+
+脚本会构建签名的 release APK，从 `../AlbatrossServer/resource` 打包
+`core_open_<version>_<date>.zip`，并组装
+`albatross_open_module_v<core>-<manager>_<date>.zip`，产物在 `build/open_source_pack/`。
+加 `--test-device <serial>` 可在设备上安装并验证 release 构建（本脚本不测试 debug 变体）。
+
 ## 安装与运行
 
 1) 确保设备已 Root。

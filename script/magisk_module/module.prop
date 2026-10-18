@@ -1,0 +1,6 @@
+id=albatross_open
+name=Albatross (Open Source)
+version=__MODULE_VERSION__
+versionCode=__MODULE_VERSION_CODE__
+author=QingWan
+description=__DESCRIPTION__

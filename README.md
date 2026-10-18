@@ -59,6 +59,27 @@ Then build:
 ./gradlew :app:assembleRelease
 ```
 
+`RELEASE_STORE_FILE` accepts an absolute path as well as a file name relative to the repo root.
+
+### Packaging the core and Magisk module
+
+The device-side runtime assets (agent dex + native libraries for all ABIs) are maintained in the
+`AlbatrossServer` repository. With `AlbatrossServer` checked out next to this project:
+
+```bash
+./script/pack_release.py \
+    --keystore /path/to/qing.jks \
+    --store-password "$RELEASE_STORE_PASSWORD" \
+    --key-alias "$RELEASE_KEY_ALIAS" \
+    --key-password "$RELEASE_KEY_PASSWORD"
+```
+
+The script builds the signed release APK, packs `core_open_<version>_<date>.zip` from
+`../AlbatrossServer/resource`, and assembles
+`albatross_open_module_v<core>-<manager>_<date>.zip` under `build/open_source_pack/`.
+Add `--test-device <serial>` to install and verify the release build on a device
+(the debug variant is not tested by this script).
+
 ## Install
 
 1) Ensure the device is rooted.

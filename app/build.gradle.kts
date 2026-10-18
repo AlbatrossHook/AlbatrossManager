@@ -33,7 +33,9 @@ android {
             val keyPwd: String? = keystoreProps.getProperty("RELEASE_KEY_PASSWORD")
                 ?: System.getenv("RELEASE_KEY_PASSWORD")
 
-            storeFile = file("../$storeFileName")
+            // absolute paths (env RELEASE_STORE_FILE) are used as-is; bare names live at the repo root
+            val storePath = file(storeFileName)
+            storeFile = if (storePath.isAbsolute) storePath else file("../$storeFileName")
             storePassword = storePwd
             keyAlias = keyAliasValue
             keyPassword = keyPwd
