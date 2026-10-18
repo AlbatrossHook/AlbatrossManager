@@ -575,6 +575,16 @@ def test_release(serial, core, apk, keep_running=False, direct=None):
     root_ctx = ensure_device(serial)
     wake(serial)
     adb_shell(serial, "am force-stop %s" % MANAGER_PKG, check=False)
+    if is_emulator:
+        # 清掉上一次测试留下的服务（只认本测试 rootPath 下的 exe），
+        # 否则新 Manager 会连到旧版本的 socket，STATUS 出现 serverRunning 假象
+        test_root = "/data/local/tmp/albatross/"
+        test_exe = test_root + "albatross_server"
+        adb_su(serial, 'for p in $(pidof albatross_server); do '
+                       '[ "$(readlink /proc/$p/exe 2>/dev/null)" = "%s" ] && kill $p; done' % test_exe,
+               check=False)
+        time.sleep(1)
+        adb_su(serial, "rm -rf " + shlex.quote(test_root), check=False)
     existed = bool((adb_shell(serial, "pm path %s" % MANAGER_PKG, check=False).stdout or "").strip())
 
     # 模拟器上做干净安装；真机保留已有安装与数据（只做 -r 升级，避免清掉用户的版本库/配置）
